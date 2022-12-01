@@ -4,21 +4,32 @@
 #include <list>
 #include <cstdlib>
 #include <fstream>
+#include <vector>
 
 #include "User/Donor.h"
 #include "User/Receiver.h"
 #include "User/User.h"
+#include "Residue/Solid.h"
+#include "Residue/Liquid.h"
+
+// para compilar g++ **/**.cpp main.cpp
 
 std::list<Donor> usuariosDoadores;
 std::list<Receiver> usuariosReceptores;
 
 User autenticatedUser;
 
+void criarResiduo()
+{
+    std::vector<Solid> solidos;
+    std::vector<Liquid> liquidos;
+}
+
 int menu()
 {
     system("clear");
     std::string opSelect;
-    std::cout << "\nAcesso ao sistema: \n1 - Acessar \n2 - Cadastrar\nInforme o número:";
+    std::cout << "\nAcesso ao sistema: \n1 - Acessar \n2 - Cadastrar\nInforme o numero:";
     std::getline(std::cin, opSelect);
 
     try
@@ -50,7 +61,7 @@ int menu1()
 {
     system("clear");
     std::string opSelect;
-    std::cout << "\nInforme o tipo: \n1 - Doador\n2 - Receptor\nInforme o número:";
+    std::cout << "\nInforme o tipo: \n1 - Doador\n2 - Receptor\nInforme o numero:";
     std::getline(std::cin, opSelect);
 
     try
@@ -87,7 +98,7 @@ void autentica(int op)
     std::string login;
     std::string password;
 
-    std::cout << "Informe o usuário: ";
+    std::cout << "Informe o usuario: ";
     std::getline(std::cin, login);
 
     std::cout << "Informe a senha: ";
@@ -103,7 +114,7 @@ void autentica(int op)
                 {
                     if (!donor.checkPassword(password))
                     {
-                        throw std::invalid_argument("Não foi possível autenticar. Verifique seu login e senha.");
+                        throw std::invalid_argument("Nao foi possível autenticar. Verifique seu login e senha.");
                     }
 
                     autenticatedUser = donor;
@@ -111,7 +122,7 @@ void autentica(int op)
                 }
             }
 
-            throw std::invalid_argument("Usuário não encontrado.");
+            throw std::invalid_argument("Usuario nao encontrado.");
         }
         else
         {
@@ -121,14 +132,14 @@ void autentica(int op)
                 {
                     if (!receiver.checkPassword(password))
                     {
-                        throw std::invalid_argument("Não foi possível autenticar. Verifique seu login e senha.");
+                        throw std::invalid_argument("Nao foi possível autenticar. Verifique seu login e senha.");
                     }
 
                     autenticatedUser = receiver;
                     return;
                 }
             }
-            throw std::invalid_argument("Usuário não encontrado.");
+            throw std::invalid_argument("Usuario nao encontrado.");
         }
     }
     catch (const std::invalid_argument &e)
@@ -143,12 +154,21 @@ void cadastra(int op)
 {
     system("clear");
     std::string name, login, password;
+    std::string document;
 
     std::cout << "Informe o Nome: ";
     std::getline(std::cin, name);
 
     std::cout << "Informe o Login: ";
     std::getline(std::cin, login);
+
+    std::cout << "Informe a Senha: ";
+    std::getline(std::cin, password);
+
+    std::cout << "Informe o Numero do seu documento CPF ou CNPJ (APENAS NUMEROS): ";
+   std::getline(std::cin, document);
+
+    // documento
 
     try
     {
@@ -158,7 +178,7 @@ void cadastra(int op)
             {
                 if (donor.getLogin() == login)
                 {
-                    throw std::invalid_argument("Usuário existente!");
+                    throw std::invalid_argument("Usuario existente!");
                 }
             }
         }
@@ -168,7 +188,7 @@ void cadastra(int op)
             {
                 if (receiver.getLogin() == login)
                 {
-                    throw std::invalid_argument("Usuário existente!");
+                    throw std::invalid_argument("Usuario existente!");
                 }
             }
         }
@@ -180,17 +200,14 @@ void cadastra(int op)
         return cadastra(op);
     }
 
-    std::cout << "Informe o Senha: ";
-    std::getline(std::cin, password);
-
     if (op == 1)
     {
-        Donor donor(name, login, password);
+        Donor donor(name, login, password, std::stoi(document));
         usuariosDoadores.push_back(donor);
     }
     else
     {
-        Receiver receiver(name, login, password);
+        Receiver receiver(name, login, password,std::stoi(document));
         usuariosReceptores.push_back(receiver);
     }
 }
@@ -211,7 +228,52 @@ int main()
         autentica(op2);
     }
 
-    std::cout << "Bem vindo(a), " << autenticatedUser.getName() << "!\nO que deseja fazer?\n";
+    std::cout << "\n Bem vindo(a), " << autenticatedUser.getName() << "!\nO que deseja fazer?\n\n";
+
+    if (op2 == 1)
+    {
+        int resposta;
+        // Se o usuario for receiver:
+        std::cout << "1 - Cadastrar residuos \n 2 - Cadastrar ponto de coleta \n 3- Verificar agendamentos de coleta \n Escreva o numero da opcao: ";
+        std::cin >> resposta;
+
+        if (resposta == 1)
+        {
+            // cadastrar residuos
+            int r2;
+            std::cout << "===== CADASTRAR RESIDUOS ===== \n 1 - Residuo Solido \n 2 - Residuo Liquido";
+            std::cin >> r2;
+
+            if (r2 == 1)
+            {
+                // cadastrar residuos solidos
+            }
+            else if (r2 == 2)
+            {
+                // cadastrar residuos liquidos
+            }
+        }
+        else if (resposta == 2)
+        {
+            // cadastrar ponto de coleta
+            std::cout << "===== CADASTRAR PONTO DE COLETA ===== \n";
+            
+        }
+        else if (resposta == 3)
+        {
+            // verificar agendamentos de coleta
+            std::cout << "===== CADASTRAR PONTO DE COLETA ===== \n";
+        }
+    }
+
+    // se resp for == 1 abre outro menu (solido ou liquido?)
+    // cadastrar residuo solido
+    //  vou cadastrar os residuos dentro de um vector;
+
+    // Se o usuario for donor:
+    std::cout << "1 - Cadastrar residuos \n 2 - Agendar horario de coleta";
+    // se op2 == 2;
+
     // Doações
     // Perfil
     //

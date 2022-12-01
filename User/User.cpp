@@ -2,11 +2,13 @@
 
 User::User() {}
 
-User::User(std::string name, std::string login, std::string password)
+User::User(std::string name, std::string login, std::string password, int document)
 {
     this->name = name;
     this->login = login;
     this->password = password;
+    this->document = document;
+
 }
 
 std::string User::getName()

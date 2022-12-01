@@ -9,7 +9,7 @@ private:
     
 public:
     Receiver();
-    Receiver(std::string name, std::string login, std::string password);
+    Receiver(std::string name, std::string login, std::string password, int document);
     ~Receiver();
 };
 #endif
