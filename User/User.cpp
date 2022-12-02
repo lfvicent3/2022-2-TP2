@@ -2,13 +2,17 @@
 
 User::User() {}
 
+int User::generatedIds = 0;
+
 User::User(std::string name, std::string login, std::string password, int document)
 {
     this->name = name;
     this->login = login;
     this->password = password;
     this->document = document;
+    this->id = User::generatedIds;
 
+    User::generatedIds++;
 }
 
 std::string User::getName()
@@ -24,6 +28,10 @@ std::string User::getLogin()
 std::list<Residue> &User::getResiduesInterest()
 {
     return this->residuesInterest;
+}
+
+int User::getId(){
+    return this->id;
 }
 
 bool User::checkPassword(std::string password)

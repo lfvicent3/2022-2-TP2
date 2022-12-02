@@ -7,6 +7,10 @@
 #include "../Residue/Residue.h"
 class User
 {
+private:
+    static int generatedIds;
+    int id;
+
 protected:
     std::string name;
     std::string login;
@@ -21,6 +25,7 @@ public:
     int getDocument();
     std::string getLogin();
     std::list<Residue> &getResiduesInterest();
+    int getId();
     bool checkPassword(std::string password);
     void setName(std::string name);
     void setResiudesInterest(Residue residue);
