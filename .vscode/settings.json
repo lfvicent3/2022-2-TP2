@@ -60,6 +60,8 @@
         "ctime": "cpp",
         "istream": "cpp",
         "fstream": "cpp",
-        "sstream": "cpp"
-    }
+        "sstream": "cpp",
+        "optional": "cpp"
+    },
+    "C_Cpp.errorSquiggles": "Disabled"
 }

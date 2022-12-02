@@ -23,6 +23,7 @@ void criarResiduo()
 {
     std::vector<Solid> solidos;
     std::vector<Liquid> liquidos;
+
 }
 
 int menu()
@@ -214,7 +215,7 @@ void cadastra(int op)
 
 int main()
 {
-    std::cout << "GERENCIAMENTO DE RESIDUOS";
+    std::cout << "==== GERENCIAMENTO DE RESIDUOS ====";
     int op = menu();
     int op2 = menu1();
 
@@ -228,13 +229,94 @@ int main()
         autentica(op2);
     }
 
-    std::cout << "\n Bem vindo(a), " << autenticatedUser.getName() << "!\nO que deseja fazer?\n\n";
+    std::cout << "================\n\nBem vindo(a), " << autenticatedUser.getName() << "!\nO que deseja fazer?\n\n";
 
     if (op2 == 1)
     {
         int resposta;
         // Se o usuario for receiver:
-        std::cout << "1 - Cadastrar residuos \n 2 - Cadastrar ponto de coleta \n 3- Verificar agendamentos de coleta \n Escreva o numero da opcao: ";
+        std::cout << " 1 - Cadastrar residuos \n 2 - Cadastrar ponto de coleta \n 3- Verificar agendamentos de coleta \n Escreva o numero da opcao: ";
+        std::cin >> resposta;
+
+        if (resposta == 1)
+        {
+            // cadastrar residuos
+            int r2;
+            std::cout << "===== CADASTRAR RESIDUOS ===== \n 1 - Residuo Solido \n 2 - Residuo Liquido \n Escreva o numero da opcao: ";
+            std::cin >> r2;
+
+            if (r2 == 1)
+            {
+                std::string nome_residuo;
+                std::string descarte_residuo;
+                // cadastrar residuos solidos
+
+                std::cout << "===== RESIDUOS SOLIDOS ===== \n";
+
+                std::cout << "Nome do residuo: \n";
+                std::getline(std::cin, nome_residuo);
+
+                std::cout << "Descreva a forma correta de descarte do residuo " << nome_residuo << ": ";
+                std::getline(std::cin, descarte_residuo);
+
+
+
+
+            }
+            else if (r2 == 2)
+            {
+                // cadastrar residuos liquidos
+                std::string nome_residuo;
+                std::string descarte_residuo;
+                // cadastrar residuos solidos
+
+                std::cout << "===== RESIDUOS LIQUIDOS ===== \n";
+                std::cout << "Nome do residuo: ";
+                std::getline(std::cin, nome_residuo);
+                std::cout << "Descreva a forma correta de descarte do residuo " << nome_residuo << ": ";
+                std::getline(std::cin, descarte_residuo);
+            }
+        }
+        else if (resposta == 2)
+        {
+            std::string nome_rua;
+            std::string nome_bairro;
+            std::string cep;
+            std::string referencia;
+            // cadastrar ponto de coleta
+            std::cout << "===== CADASTRAR PONTO DE COLETA ===== \n";
+            std::cout << "Insira os dados de localizaçao: \n Rua: ";
+            std::getline(std::cin, nome_rua);
+            std::cout << "\nBairro: ";
+            std::getline(std::cin, nome_bairro);
+            std::cout << "\nCEP: ";
+            std::getline(std::cin, cep);
+            std::cout << "\nPonto de referencia: ";
+            std::getline(std::cin, referencia);
+
+            
+        }
+        else if (resposta == 3)
+        {
+            std::string data;
+            std::string horario;
+            // verificar agendamentos de coleta
+            std::cout << "===== AGENDAMENTO DE COLETA ===== \n";
+            std::cout << "Insira o dia e o horario ideal para voce realizar essa coleta: \n";
+            std::cout << "Dia (DD/MM/AAAA): ";
+            std::getline (std::cin, data);
+            std::cout<< "\n Horario (HH:MM): ";
+            std::getline (std::cin, horario);
+
+        }
+    }
+
+// DOADOR 
+
+    if (op2==2) {
+        int resposta;
+        // Se o usuario for donor:
+        std::cout << "1 - Cadastrar residuos \n 2 - Cadastrar ponto de coleta \n 3- Agendar coleta \n Escreva o numero da opcao: ";
         std::cin >> resposta;
 
         if (resposta == 1)
@@ -246,35 +328,75 @@ int main()
 
             if (r2 == 1)
             {
+                std::string nome_residuo;
+                std::string descarte_residuo;
                 // cadastrar residuos solidos
+
+                std::cout << "===== RESIDUOS SOLIDOS ===== \n";
+                std::cout << "Nome do residuo: ";
+                std::getline(std::cin, nome_residuo);
+                std::cout << "Descreva a forma correta de descarte do residuo " << nome_residuo << ": ";
+                std::getline(std::cin, descarte_residuo);
+
+
+
             }
             else if (r2 == 2)
             {
                 // cadastrar residuos liquidos
+                std::string nome_residuo;
+                std::string descarte_residuo;
+
+                std::cout << "===== RESIDUOS LIQUIDOS ===== \n";
+                std::cout << "Nome do residuo: ";
+                std::getline(std::cin, nome_residuo);
+                std::cout << "Descreva a forma correta de descarte do residuo " << nome_residuo << ": ";
+                std::getline(std::cin, descarte_residuo);
             }
         }
         else if (resposta == 2)
         {
+            std::string nome_rua;
+            std::string nome_bairro;
+            std::string cep;
+            std::string referencia;
             // cadastrar ponto de coleta
             std::cout << "===== CADASTRAR PONTO DE COLETA ===== \n";
+            std::cout << "Insira os dados de localizaçao: \n Rua: ";
+            std::getline(std::cin, nome_rua);
+            std::cout << "\nBairro: ";
+            std::getline(std::cin, nome_bairro);
+            std::cout << "\nCEP: ";
+            std::getline(std::cin, cep);
+            std::cout << "\nPonto de referencia: ";
+            std::getline(std::cin, referencia);
+
             
         }
         else if (resposta == 3)
         {
-            // verificar agendamentos de coleta
-            std::cout << "===== CADASTRAR PONTO DE COLETA ===== \n";
+            std::string data;
+            std::string horario;
+            int resp;
+
+            // agendar coleta
+            std::cout << "===== AGENDAR COLETA ===== \n";
+            std::cout << "Insira o dia e o horario ideal para voce realizar essa coleta: \n";
+            std::cout << "Dia (DD/MM/AAAA): ";
+            std::getline (std::cin, data);
+            std::cout<< "\n Horario (HH:MM): ";
+            std::getline (std::cin, horario);
+
+            std::cout << "\n== LOCAL == \n 1- Levar no local do receptor \n2- Entregar no meu local de coleta \n Escreva o numero da opcao: ";
+            std::cin >> resp;
+                if (resp==1) {
+                    // o local de coleta é o local do receiver
+                } 
+                else if (resp==2) {
+                    // o local de coleta é o local do donor
+                }
         }
     }
 
-    // se resp for == 1 abre outro menu (solido ou liquido?)
-    // cadastrar residuo solido
-    //  vou cadastrar os residuos dentro de um vector;
 
-    // Se o usuario for donor:
-    std::cout << "1 - Cadastrar residuos \n 2 - Agendar horario de coleta";
-    // se op2 == 2;
-
-    // Doações
-    // Perfil
-    //
 }
