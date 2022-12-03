@@ -17,6 +17,8 @@ int Database::searchItem(Donor donor)
             return i;
         }
     }
+
+    return -1;
 }
 int Database::searchItem(Receiver receiver)
 {
@@ -27,6 +29,8 @@ int Database::searchItem(Receiver receiver)
             return i;
         }
     }
+
+    return -1;
 }
 int Database::searchItem(Solid solid)
 {
@@ -37,6 +41,8 @@ int Database::searchItem(Solid solid)
             return i;
         }
     }
+
+    return -1;
 }
 int Database::searchItem(Liquid liquid)
 {
@@ -47,6 +53,8 @@ int Database::searchItem(Liquid liquid)
             return i;
         }
     }
+
+    return -1;
 }
 
 void Database::createItem(const Donor &donor)
@@ -91,15 +99,23 @@ const std::vector<Liquid> &Database::readLiquidResidues()
 
 void Database::updateItem(const Donor &donor)
 {
+    int i = this->searchItem(donor);
+    this->listDonorUsers[i] = donor;
 }
 void Database::updateItem(const Receiver &receiver)
 {
+    int i = this->searchItem(receiver);
+    this->listReceiverUsers[i] = receiver;
 }
 void Database::updateItem(const Solid &solid)
 {
+    int i = this->searchItem(solid);
+    this->listSolidResidues[i] = solid;
 }
 void Database::updateItem(const Liquid &liquid)
 {
+    int i = this->searchItem(liquid);
+    this->listLiquidResidues[i] = liquid;
 }
 
 Database::~Database()
