@@ -30,7 +30,8 @@ std::list<Residue> &User::getResiduesInterest()
     return this->residuesInterest;
 }
 
-int User::getId(){
+int User::getId()
+{
     return this->id;
 }
 
@@ -54,6 +55,10 @@ void User::setResiudesInterest(Residue residue)
     this->residuesInterest.push_back(residue);
 }
 
+int User::getDocument()
+{
+    return this->document;
+}
 User::~User()
 {
 }

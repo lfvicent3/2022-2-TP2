@@ -35,7 +35,7 @@ int menu()
 
     try
     {
-        int op = std::stoi(opSelect);
+        int op = std::stoi(opSelect, nullptr, 10);
         if (op < 1 || op > 2)
         {
             throw std::invalid_argument("O valor deve ser 1 ou 2.");
@@ -167,7 +167,7 @@ void cadastra(int op)
     std::getline(std::cin, password);
 
     std::cout << "Informe o Numero do seu documento CPF ou CNPJ (APENAS NUMEROS): ";
-   std::getline(std::cin, document);
+    std::getline(std::cin, document);
 
     // documento
 
@@ -387,7 +387,7 @@ int main()
             std::cout<< "\n Horario (HH:MM): ";
             std::getline (std::cin, horario);
 
-            std::cout << "\n== LOCAL == \n 1- Levar no local do receptor \n2- Entregar no meu local de coleta \n Escreva o numero da opcao: ";
+            
             std::cin >> resp;
                 if (resp==1) {
                     // o local de coleta é o local do receiver
@@ -397,6 +397,4 @@ int main()
                 }
         }
     }
-
-
 }

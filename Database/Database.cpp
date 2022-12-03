@@ -1,18 +1,19 @@
 #include "Database.h"
 
+std::vector<Donor> Database::listDonorUsers = std::vector<Donor>();
+std::vector<Receiver> Database::listReceiverUsers = std::vector<Receiver>();
+std::vector<Solid> Database::listSolidResidues = std::vector<Solid>();
+std::vector<Liquid> Database::listLiquidResidues = std::vector<Liquid>();
+
 Database::Database()
 {
-    this->listDonorUsers = std::vector<Donor>();
-    this->listReceiverUsers = std::vector<Receiver>();
-    this->listSolidResidues = std::vector<Solid>();
-    this->listLiquidResidues = std::vector<Liquid>();
 }
 
 int Database::searchItem(Donor donor)
 {
-    for (int i = 0; i < this->listDonorUsers.size(); i++)
+    for (int i = 0; i < Database::listDonorUsers.size(); i++)
     {
-        if (this->listDonorUsers[i].getId() == donor.getId())
+        if (Database::listDonorUsers[i].getId() == donor.getId())
         {
             return i;
         }
@@ -22,9 +23,9 @@ int Database::searchItem(Donor donor)
 }
 int Database::searchItem(Receiver receiver)
 {
-    for (int i = 0; i < this->listReceiverUsers.size(); i++)
+    for (int i = 0; i < Database::listReceiverUsers.size(); i++)
     {
-        if (this->listDonorUsers[i].getId() == receiver.getId())
+        if (Database::listDonorUsers[i].getId() == receiver.getId())
         {
             return i;
         }
@@ -34,9 +35,9 @@ int Database::searchItem(Receiver receiver)
 }
 int Database::searchItem(Solid solid)
 {
-    for (int i = 0; i < this->listSolidResidues.size(); i++)
+    for (int i = 0; i < Database::listSolidResidues.size(); i++)
     {
-        if (this->listDonorUsers[i].getId() == solid.getId())
+        if (Database::listDonorUsers[i].getId() == solid.getId())
         {
             return i;
         }
@@ -46,9 +47,9 @@ int Database::searchItem(Solid solid)
 }
 int Database::searchItem(Liquid liquid)
 {
-    for (int i = 0; i < this->listLiquidResidues.size(); i++)
+    for (int i = 0; i < Database::listLiquidResidues.size(); i++)
     {
-        if (this->listDonorUsers[i].getId() == liquid.getId())
+        if (Database::listDonorUsers[i].getId() == liquid.getId())
         {
             return i;
         }
@@ -59,63 +60,63 @@ int Database::searchItem(Liquid liquid)
 
 void Database::createItem(const Donor &donor)
 {
-    this->listDonorUsers.push_back(donor);
+    Database::listDonorUsers.push_back(donor);
 }
 
 void Database::createItem(const Receiver &receiver)
 {
-    this->listReceiverUsers.push_back(receiver);
+    Database::listReceiverUsers.push_back(receiver);
 }
 
 void Database::createItem(const Solid &solid)
 {
-    this->listSolidResidues.push_back(solid);
+    Database::listSolidResidues.push_back(solid);
 }
 
 void Database::createItem(const Liquid &liquid)
 {
-    this->listLiquidResidues.push_back(liquid);
+    Database::listLiquidResidues.push_back(liquid);
 }
 
 const std::vector<Donor> &Database::readDonorUsers()
 {
-    return this->listDonorUsers;
+    return Database::listDonorUsers;
 }
 
 const std::vector<Receiver> &Database::readReceiverUsers()
 {
-    return this->listReceiverUsers;
+    return Database::listReceiverUsers;
 }
 
 const std::vector<Solid> &Database::readSolidResidues()
 {
-    return this->listSolidResidues;
+    return Database::listSolidResidues;
 }
 
 const std::vector<Liquid> &Database::readLiquidResidues()
 {
-    return this->listLiquidResidues;
+    return Database::listLiquidResidues;
 }
 
 void Database::updateItem(const Donor &donor)
 {
-    int i = this->searchItem(donor);
-    this->listDonorUsers[i] = donor;
+    int i = Database::searchItem(donor);
+    Database::listDonorUsers[i] = donor;
 }
 void Database::updateItem(const Receiver &receiver)
 {
-    int i = this->searchItem(receiver);
-    this->listReceiverUsers[i] = receiver;
+    int i = Database::searchItem(receiver);
+    Database::listReceiverUsers[i] = receiver;
 }
 void Database::updateItem(const Solid &solid)
 {
-    int i = this->searchItem(solid);
-    this->listSolidResidues[i] = solid;
+    int i = Database::searchItem(solid);
+    Database::listSolidResidues[i] = solid;
 }
 void Database::updateItem(const Liquid &liquid)
 {
-    int i = this->searchItem(liquid);
-    this->listLiquidResidues[i] = liquid;
+    int i = Database::searchItem(liquid);
+    Database::listLiquidResidues[i] = liquid;
 }
 
 Database::~Database()

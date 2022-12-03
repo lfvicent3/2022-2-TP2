@@ -10,10 +10,10 @@
 class Database
 {
 private:
-    std::vector<Donor> listDonorUsers;
-    std::vector<Receiver> listReceiverUsers;
-    std::vector<Solid> listSolidResidues;
-    std::vector<Liquid> listLiquidResidues;
+    static std::vector<Donor> listDonorUsers;
+    static std::vector<Receiver> listReceiverUsers;
+    static std::vector<Solid> listSolidResidues;
+    static std::vector<Liquid> listLiquidResidues;
 
     int searchItem(Donor donor);
     int searchItem(Receiver receiver);
