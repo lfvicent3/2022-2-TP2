@@ -105,7 +105,7 @@ int ConsoleText::printMenuOqueFazer(int userType)
     if (userType == 1)
         std::cout << "3 - Verificar agendamentos de coleta\n";
     else
-        std::cout << "3 - Agendar coleta";
+        std::cout << "3 - Agendar coleta\n";
     std::cout << "Informe o número: ";
     return ConsoleText::getIntOption(
         ConsoleText::validateOpInt2,

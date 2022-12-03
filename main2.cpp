@@ -1,4 +1,5 @@
 #include <string>
+#include <exception>
 
 #include "ConsoleText/ConsoleText.h"
 #include "Autenticate/Autenticate.h"
@@ -11,6 +12,8 @@ int main()
 {
     User currentUser;
     Database *db = new Database();
+    // Criar os dados fake nessa função.
+    db->fakePopulate();
 
     int accessoOuCadastro = ConsoleText::printMenuAcessoCadastro();
     int doadorOuReceptor = ConsoleText::printMenuSelectUserType();
@@ -20,16 +23,32 @@ int main()
     {
         std::string login, password;
         ConsoleText::printMenuAutenticaUsuario(login, password);
-        currentUser = auth->login(login, password, doadorOuReceptor);
+
+        while (true)
+        {
+            try
+            {
+                currentUser = auth->login(login, password, doadorOuReceptor);
+            }
+            catch (const std::invalid_argument &e)
+            {
+                std::cerr << e.what() << '\n';
+                continue;
+            }
+
+            break;
+        }
     }
     else
     {
         std::string name, login, password;
         int document;
         ConsoleText::printMenuCadastraUsuario(name, login, password, document);
+        // tratar excessao
         auth->cadastro(name, login, password, document, doadorOuReceptor);
 
         ConsoleText::printMenuAutenticaUsuario(login, password);
+        // tratar excessao
         currentUser = auth->login(login, password, doadorOuReceptor);
     }
     delete auth;
@@ -56,11 +75,14 @@ int main()
     {
         std::string nome_rua, nome_bairro, cep, referencia;
         ConsoleText::printCadastroPontoColeta(nome_rua, nome_bairro, cep, referencia);
-        // Adicionar o usuario que criou a CollectPoint
-        // Criar a sobrecarga em Database;
+        // Adicionar o usuario que criou a CollectPoint em CollectPoint
         db->createItem(CollectPoint(nome_rua, nome_bairro, cep, referencia));
     }
     else if (oQFazer == 3 && doadorOuReceptor == 1)
+    {
+        // Listar agendamentos de coleta;
+    }
+    else
     {
         std::string data, horario;
         int local;
@@ -74,9 +96,8 @@ int main()
             // o local de coleta é o local do donor
         }
     }
-    else
-    {
-    }
+
+    delete db;
 
     return 0;
 }

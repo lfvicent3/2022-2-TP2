@@ -6,8 +6,11 @@ std::vector<Solid> Database::listSolidResidues = std::vector<Solid>();
 std::vector<Liquid> Database::listLiquidResidues = std::vector<Liquid>();
 std::vector<CollectPoint> Database::listCollectPoint = std::vector<CollectPoint>();
 
-Database::Database()
+Database::Database() {}
+
+void Database::fakePopulate()
 {
+
 }
 
 int Database::searchItem(Donor donor)
