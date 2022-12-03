@@ -4,6 +4,7 @@ std::vector<Donor> Database::listDonorUsers = std::vector<Donor>();
 std::vector<Receiver> Database::listReceiverUsers = std::vector<Receiver>();
 std::vector<Solid> Database::listSolidResidues = std::vector<Solid>();
 std::vector<Liquid> Database::listLiquidResidues = std::vector<Liquid>();
+std::vector<CollectPoint> Database::listCollectPoint = std::vector<CollectPoint>();
 
 Database::Database()
 {
@@ -58,6 +59,19 @@ int Database::searchItem(Liquid liquid)
     return -1;
 }
 
+int Database::searchItem(CollectPoint collectPoint)
+{
+    for (int i = 0; i < Database::listCollectPoint.size(); i++)
+    {
+        if (Database::listCollectPoint[i].getId() == collectPoint.getId())
+        {
+            return i;
+        }
+    }
+
+    return -1;
+}
+
 void Database::createItem(const Donor &donor)
 {
     Database::listDonorUsers.push_back(donor);
@@ -76,6 +90,11 @@ void Database::createItem(const Solid &solid)
 void Database::createItem(const Liquid &liquid)
 {
     Database::listLiquidResidues.push_back(liquid);
+}
+
+void Database::createItem(const CollectPoint &collectPoint)
+{
+    Database::listCollectPoint.push_back(collectPoint);
 }
 
 const std::vector<Donor> &Database::readDonorUsers()
@@ -98,6 +117,11 @@ const std::vector<Liquid> &Database::readLiquidResidues()
     return Database::listLiquidResidues;
 }
 
+const std::vector<CollectPoint> &Database::readCollectPoints()
+{
+    return Database::listCollectPoint;
+}
+
 void Database::updateItem(const Donor &donor)
 {
     int i = Database::searchItem(donor);
@@ -113,10 +137,17 @@ void Database::updateItem(const Solid &solid)
     int i = Database::searchItem(solid);
     Database::listSolidResidues[i] = solid;
 }
+
 void Database::updateItem(const Liquid &liquid)
 {
     int i = Database::searchItem(liquid);
     Database::listLiquidResidues[i] = liquid;
+}
+
+void Database::updateItem(const CollectPoint &collectPoint)
+{
+    int i = Database::searchItem(collectPoint);
+    Database::listCollectPoint[i] = collectPoint;
 }
 
 Database::~Database()

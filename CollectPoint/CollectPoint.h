@@ -10,6 +10,8 @@ private:
     std::string line2;
     std::string cep;
     std::string reference;
+    static int generatedIds;
+    int id;
 
 public:
     CollectPoint();
@@ -18,6 +20,7 @@ public:
     std::string getLine2();
     std::string getCep();
     std::string getReference();
+    int getId();
 
     ~CollectPoint();
 };
