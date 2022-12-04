@@ -5,7 +5,7 @@ std::vector<Donor> Database::listDonorUsers = std::vector<Donor>();
 std::vector<Receiver> Database::listReceiverUsers = std::vector<Receiver>();
 std::vector<Solid> Database::listSolidResidues = std::vector<Solid>();
 std::vector<Liquid> Database::listLiquidResidues = std::vector<Liquid>();
-std::vector<CollectPoint> Database::listCollectPoint = std::vector<CollectPoint>();
+
 
 Database::Database() {}
 
@@ -31,6 +31,8 @@ void Database::fakePopulate()
     this->createItem(Receiver("Vitoria Ferreira", "receiver", "receiver", 1234567899, "rua dos passos, 112, vicosa mg"));
     this->createItem(Receiver("Luiz Felipe", "receiver", "receiver", 1234567899, "rua dos passos, 112, vicosa mg"));
     this->createItem(Receiver("Julio Cocorico", "receiver", "receiver", 1234567899, "rua dos passos, 112, vicosa mg"));
+
+    // setando interesses
 }
 
 void Database::printItem()
@@ -52,10 +54,10 @@ void Database::printItem()
     }
 }
 
-void setDonorInterest(User user, int idResidue)
+void Database::setDonorInterest(User user, int idResidue)
 {
-    Solid setResidueSolid;
-    Liquid setResidueLiquid;
+
+    int idInterest;
 
     for (int j = 0; j < Database::listDonorUsers.size(); j++)
     {
@@ -66,30 +68,29 @@ void setDonorInterest(User user, int idResidue)
             {
                 if (Database::listSolidResidues[i].getId() == idResidue)
                 {
-                    setResidueSolid = Database::listSolidResidues[i];
-                    Database::listDonorUsers[j].setResiduesInterest(setResidueSolid);
-                }
+                    idInterest = Database::listSolidResidues[i].getId();
+                    Database::listDonorUsers[j].setResiduesInterest(idInterest);
 
+                    
+                }
             }
             for (int i = 0; i < Database::listLiquidResidues.size(); i++)
             {
                 if (Database::listLiquidResidues[i].getId() == idResidue)
                 {
-                    setResidueLiquid = Database::listLiquidResidues[i];
-                    Database::listDonorUsers[j].setResiduesInterest(setResidueLiquid);
+                    idInterest = Database::listLiquidResidues[i].getId();
+                    Database::listDonorUsers[j].setResiduesInterest(idInterest);
                 }
             }
-            
+
+            std::cout << listDonorUsers[j].getResiduesInterest();
         }
-        
     }
-    
 }
 
-void setReceiverInterest(User user, int idResidue)
+void Database::setReceiverInterest(User user, int idResidue)
 {
-    Solid setResidueSolid;
-    Liquid setResidueLiquid;
+    int idInterest;
 
     for (int j = 0; j < Database::listReceiverUsers.size(); j++)
     {
@@ -100,24 +101,31 @@ void setReceiverInterest(User user, int idResidue)
             {
                 if (Database::listSolidResidues[i].getId() == idResidue)
                 {
-                    setResidueSolid = Database::listSolidResidues[i];
-                    Database::listReceiverUsers[j].setResiduesInterest(setResidueSolid);
+                    idInterest = Database::listSolidResidues[i].getId();
+                    Database::listReceiverUsers[j].setResiduesInterest(idInterest);
                 }
             }
             for (int i = 0; i < Database::listLiquidResidues.size(); i++)
             {
                 if (Database::listLiquidResidues[i].getId() == idResidue)
                 {
-                    setResidueLiquid = Database::listLiquidResidues[i];
-                    Database::listReceiverUsers[j].setResiduesInterest(setResidueLiquid);
+                    
+                    idInterest = Database::listLiquidResidues[i].getId();
+                    Database::listReceiverUsers[j].setResiduesInterest(idInterest);
+
+                    
                 }
             }
-            
         }
-        
+    
     }
+
     
 }
+
+// procurando matchs 
+
+
 
 
 
@@ -170,18 +178,9 @@ int Database::searchItem(Liquid liquid)
     return -1;
 }
 
-int Database::searchItem(CollectPoint collectPoint)
-{
-    for (int i = 0; i < Database::listCollectPoint.size(); i++)
-    {
-        if (Database::listCollectPoint[i].getId() == collectPoint.getId())
-        {
-            return i;
-        }
-    }
 
-    return -1;
-}
+
+
 
 void Database::createItem(const Donor &donor)
 {
@@ -203,10 +202,7 @@ void Database::createItem(const Liquid &liquid)
     Database::listLiquidResidues.push_back(liquid);
 }
 
-void Database::createItem(const CollectPoint &collectPoint)
-{
-    Database::listCollectPoint.push_back(collectPoint);
-}
+
 
 const std::vector<Donor> &Database::readDonorUsers()
 {
@@ -228,10 +224,6 @@ const std::vector<Liquid> &Database::readLiquidResidues()
     return Database::listLiquidResidues;
 }
 
-const std::vector<CollectPoint> &Database::readCollectPoints()
-{
-    return Database::listCollectPoint;
-}
 
 void Database::updateItem(const Donor &donor)
 {
@@ -255,11 +247,7 @@ void Database::updateItem(const Liquid &liquid)
     Database::listLiquidResidues[i] = liquid;
 }
 
-void Database::updateItem(const CollectPoint &collectPoint)
-{
-    int i = Database::searchItem(collectPoint);
-    Database::listCollectPoint[i] = collectPoint;
-}
+
 
 Database::~Database()
 {

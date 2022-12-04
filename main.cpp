@@ -10,6 +10,9 @@
 #include "Residue/Liquid.h"
 #include "CollectPoint/CollectPoint.h"
 
+// para compilar: g++ **/**.cpp main.cpp
+
+
 int main()
 {
     User currentUser;
@@ -103,7 +106,7 @@ inicio:
             std::cin >> idResiduo;
 
             db->setDonorInterest(currentUser,idResiduo);
-            std::cout << "\nO residuo escolhido foi: "<< currentUser.getResiduesInterest();
+            
 
             goto inicio;
 
@@ -121,9 +124,33 @@ inicio:
             std::cin >> idResiduo;
 
             db->setReceiverInterest(currentUser,idResiduo);
-            std::cout << "\nO residuo escolhido foi: "<< currentUser.getResiduesInterest();
 
-            goto inicio;
+            system ("CLS");
+            
+            
+            std::cout << "===== BUSCANDO MATCH ===== \n\n" << std::flush;
+
+            int match = db->findMatch(currentUser, idResiduo);
+            
+            if (match == 0) {
+                int resp;
+                std::cout << "Desculpe, não ha pessoas coletando esse residuo no momento :( \nTente novamente mais tarde. \n\n" 
+
+                std::cout << "1 - Voltar ao menu principal\n";
+                std::cout << "2 - Sair do programa \n";
+                std::cin >> resp;
+
+                if (resp == 1) {
+                    goto inicio;
+                } else if (resp == 2) {
+                    return 0;
+                }
+            }
+            else if (match > 0) {
+                int novoMatch; 
+                novoMatch = ConsoleText::printMenuMatch();
+            }
+            
 
         }
         else if (manageResidue == 2)

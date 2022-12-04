@@ -17,7 +17,7 @@ protected:
     std::string password;
     std::string adress;
     int document;
-    std::vector<Residue> residuesInterest;
+    int residuesInterest;
     User(std::string name, std::string login, std::string password, int document, std::string adress);
 
 public:
@@ -26,11 +26,11 @@ public:
     int getDocument();
     std::string getLogin();
     std::string getAdress();
-    std::vector<Residue> &getResiduesInterest();
+    int &getResiduesInterest();
     int getId();
     bool checkPassword(std::string password);
     void setName(std::string name);
-    void setResiduesInterest(Residue residue);
+    void setResiduesInterest(int idResidue);
     void setAdress(std::string adress);
 
 

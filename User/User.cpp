@@ -31,7 +31,7 @@ std::string User::getAdress()
     return this->adress;
 }
 
-std::vector<Residue> &User::getResiduesInterest()
+int &User::getResiduesInterest()
 {
     return this->residuesInterest;
 }
@@ -62,9 +62,9 @@ void User::setAdress(std::string adress)
 }
 
 
-void User::setResiduesInterest(Residue residue)
+void User::setResiduesInterest(int idResidue)
 {
-    this->residuesInterest.push_back(residue);
+    this->residuesInterest = idResidue;
 }
 
 int User::getDocument()

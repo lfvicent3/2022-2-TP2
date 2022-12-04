@@ -206,7 +206,7 @@ int ConsoleText::printEditProfile()
         "O valor deve ser entre 1 e 3.\nTente novamente: ");
 }
 
-int ConsoleText::printMenuAgendamento()
+int ConsoleText::printMenuAgendamento(int userType)
 {
     std::cout << "===== AGENDAMENTOS =====\n";
 
@@ -226,6 +226,8 @@ int ConsoleText::printMenuAgendamento()
         ConsoleText::validateOpInt2,
         "O valor deve ser entre 1 e 3.\nTente novamente: ");
 }
+
+
 
 void ConsoleText::printAgendamentoColeta(std::string &data, std::string &horario, int &local)
 {
