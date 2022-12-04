@@ -1,4 +1,5 @@
 #include "ConsoleText.h"
+#include <vector>
 
 int ConsoleText::getIntOption(bool(validateEntrada)(int), const std::string &erroMessage)
 {
@@ -76,7 +77,7 @@ void ConsoleText::printMenuAutenticaUsuario(std::string &login, std::string &pas
     std::getline(std::cin, password);
 }
 
-void ConsoleText::printMenuCadastraUsuario(std::string &name, std::string &login, std::string &password, int &document)
+void ConsoleText::printMenuCadastraUsuario(std::string &name, std::string &login, std::string &password, int &document, std::string &adress)
 {
     std::cout << "===== CADASTRE-SE =====\n";
     std::cout << "Informe o Nome: ";
@@ -87,6 +88,8 @@ void ConsoleText::printMenuCadastraUsuario(std::string &name, std::string &login
     std::getline(std::cin, password);
     std::cout << "Informe o Numero do seu documento CPF ou CNPJ (APENAS NUMEROS): ";
     document = ConsoleText::getIntOption(ConsoleText::notValidate, "");
+    std::cout << "Informe o endereco de coleta: ";
+    std::getline(std::cin, adress);
 }
 
 void ConsoleText::printBemVindo(User &user)
@@ -96,21 +99,38 @@ void ConsoleText::printBemVindo(User &user)
               << std::endl;
 }
 
+void ConsoleText::printEndereco(User &user, std::string &data, std::string &horario )
+{
+    std::cout << " === AGENDAMENTO === \n";
+    std::cout << "Agendamento marcado para o dia " << data << " as " << horario << std::endl;
+    std::cout << "O local de entrega sera no seguinte endereco: \n" << user.getAdress()<< std::endl;
+}
+
 int ConsoleText::printMenuOqueFazer(int userType)
 {
 
     std::cout << "===== O QUE DESEJA FAZER =====\n";
-    std::cout << "1 - Cadastrar residuos\n";
-    std::cout << "2 - Cadastrar ponto de coleta\n";
+
     if (userType == 1)
+    {
+        std::cout << "1 - Doar um residuo\n";
+        std::cout << "2 - Editar perfil\n";
         std::cout << "3 - Verificar agendamentos de coleta\n";
+    }
     else
+    {
+        std::cout << "1 - Cadastrar um residuo\n";
+        std::cout << "2 - Editar perfil\n";
         std::cout << "3 - Agendar coleta\n";
+    }
     std::cout << "Informe o número: ";
     return ConsoleText::getIntOption(
         ConsoleText::validateOpInt2,
         "O valor deve ser entre 1 e 3.\nTente novamente: ");
 }
+
+// mostrar a lista de residuos cadastrados e definir qual residuo o doador tem pra doar.
+
 
 int ConsoleText::printCadastroResiduos()
 {
@@ -167,6 +187,7 @@ void ConsoleText::printAgendamentoColeta(std::string &data, std::string &horario
     std::cout << "1 - Levar no local do receptor\n";
     std::cout << "2 - Entregar no meu local de coleta\n";
     std::cout << "Informe o número: ";
+    
     local = ConsoleText::getIntOption(
         ConsoleText::validateOpInt,
         "O número deve estar entre 1 e 2.");

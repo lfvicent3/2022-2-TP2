@@ -11,18 +11,23 @@ Residue::Residue(std::string name, std::string help)
 
 int Residue::generatedIds = 0;
 
-std::string Residue::getName()
+/*
+std::string Residue::getName() const
 {
     return this->name;
 }
-
+*/
 std::string Residue::getHelp() const
 {
-    return "Esse residuo deve ser " + this->help;
+    return this->help;
 }
 
 int Residue::getId(){
     return this->id;
+}
+
+std::string Residue::getName() {
+    return this->name;
 }
 
 Residue::~Residue()

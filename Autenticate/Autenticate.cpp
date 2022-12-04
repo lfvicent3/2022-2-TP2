@@ -43,7 +43,7 @@ User Autenticate::login(std::string login, std::string password, int op)
     }
 }
 
-void Autenticate::cadastro(std::string name, std::string login, std::string password, int document, int op)
+void Autenticate::cadastro(std::string name, std::string login, std::string password, int document, std::string adress, int op)
 {
     if (op == 1)
     {
@@ -55,7 +55,7 @@ void Autenticate::cadastro(std::string name, std::string login, std::string pass
             }
         }
 
-        this->db.createItem(Donor(name, login, password, document));
+        this->db.createItem(Donor(name, login, password, document,adress));
     }
     else
     {
@@ -67,7 +67,7 @@ void Autenticate::cadastro(std::string name, std::string login, std::string pass
             }
         }
 
-        this->db.createItem(Receiver(name, login, password, document));
+        this->db.createItem(Receiver(name, login, password, document,adress));
     }
 }
 

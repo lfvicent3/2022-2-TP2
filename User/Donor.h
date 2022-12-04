@@ -9,7 +9,7 @@ private:
 
 public:
     Donor();
-    Donor(std::string name, std::string login, std::string password, int document);
+    Donor(std::string name, std::string login, std::string password, int document, std::string adress);
     ~Donor();
 };
 

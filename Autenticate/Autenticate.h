@@ -18,7 +18,7 @@ private:
 public:
     Autenticate();
     User login(std::string login, std::string password, int op);
-    void cadastro(std::string name, std::string login, std::string password, int document, int op);
+    void cadastro(std::string name, std::string login, std::string password, int document, std::string adress, int op);
     ~Autenticate();
 };
 

@@ -4,12 +4,13 @@ User::User() {}
 
 int User::generatedIds = 0;
 
-User::User(std::string name, std::string login, std::string password, int document)
+User::User(std::string name, std::string login, std::string password, int document, std::string adress)
 {
     this->name = name;
     this->login = login;
     this->password = password;
     this->document = document;
+    this->adress = adress;
     this->id = User::generatedIds;
 
     User::generatedIds++;
@@ -25,7 +26,12 @@ std::string User::getLogin()
     return this->login;
 }
 
-std::list<Residue> &User::getResiduesInterest()
+std::string User::getAdress()
+{
+    return this->adress; 
+}
+
+std::vector<Residue> &User::getResiduesInterest()
 {
     return this->residuesInterest;
 }
@@ -50,6 +56,7 @@ void User::setName(std::string name)
     this->name = name;
 }
 
+
 void User::setResiudesInterest(Residue residue)
 {
     this->residuesInterest.push_back(residue);
@@ -59,6 +66,8 @@ int User::getDocument()
 {
     return this->document;
 }
+
+
 User::~User()
 {
 }

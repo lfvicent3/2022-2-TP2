@@ -1,4 +1,5 @@
 #include "Database.h"
+#include <iostream>
 
 std::vector<Donor> Database::listDonorUsers = std::vector<Donor>();
 std::vector<Receiver> Database::listReceiverUsers = std::vector<Receiver>();
@@ -10,8 +11,57 @@ Database::Database() {}
 
 void Database::fakePopulate()
 {
+    // solidos
+    this->createItem(Solid("Papel", "Para o descarte correto de papeis, jogue-os na lixeira azul ou de reciclaveis."));
+    this->createItem(Solid("Metal", "Para o descarte correto de metais, jogue-os na lixeira amarela ou de reciclaveis."));
+    this->createItem(Solid("Plastico", "Para o descarte correto de plasticos, jogue-os na lixeira vermelha ou de reciclaveis."));
 
+    // liquidos
+
+    this->createItem(Liquid("Oleo de cozinha", "Para o descarte correto de oleo de cozinha, deve-se armazenar em um recipiente e levar em um ponto de coleta para ser reciclado."));
+
+    // pessoas fake
+
+    this->createItem(Donor("Cleiton Baiano", "donor", "donor", 123456789, "rua dos passos, 112, vicosa mg"));
+    this->createItem(Donor("Neymar Junior", "donor", "donor", 123456789, "rua dos passos, 112, vicosa mg"));
+    this->createItem(Donor("Isabella Swan", "donor", "donor", 123456789, "rua dos passos, 112, vicosa mg"));
+    this->createItem(Donor("Maria da Penha", "donor", "donor", 123456789, "rua dos passos, 112, vicosa mg"));
+
+    this->createItem(Receiver("Katia Maria", "receiver", "receiver", 1234567899, "rua dos passos, 112, vicosa mg"));
+    this->createItem(Receiver("Vitoria Ferreira", "receiver", "receiver", 1234567899, "rua dos passos, 112, vicosa mg"));
+    this->createItem(Receiver("Luiz Felipe", "receiver", "receiver", 1234567899, "rua dos passos, 112, vicosa mg"));
+    this->createItem(Receiver("Julio Cocorico", "receiver", "receiver", 1234567899, "rua dos passos, 112, vicosa mg"));
+
+    // pontos de coleta fake
+
+    // this->createItem(CollectPoint("Rua dos Alfeneiros","Centro","35920-000","Prox ao supermercado amantino"));
+    // this->createItem(CollectPoint("Rua tres","Sao Sebastiao","35920-000","Ao lado da clinica cuide mais"));
 }
+
+/*
+void Database::printItem(Solid solid)
+{
+
+    std::cout << "====== SOLIDOS ====== \n";
+    for (int i = 0; i < Database::listSolidResidues.size(); i++)
+    {
+        std::cout << Database::listSolidResidues[i].getName << "\n";
+        std::cout << Database::listSolidResidues[i].getHelp << "\n";
+        std::cout << std::endl;
+    }
+}
+
+void Database::printItem(Liquid liquid)
+{
+    std::cout << "====== LIQUIDOS ====== \n";
+    for (int i = 0; i < Database::listLiquidResidues.size(); i++)
+    {
+        std::cout << Database::listLiquidResidues[i].getName << std::endl;
+        std::cout << Database::listLiquidResidues[i].getHelp << std::endl;
+        std::cout << std::endl;
+    }
+}
+*/
 
 int Database::searchItem(Donor donor)
 {
@@ -88,11 +138,13 @@ void Database::createItem(const Receiver &receiver)
 void Database::createItem(const Solid &solid)
 {
     Database::listSolidResidues.push_back(solid);
+    
 }
 
 void Database::createItem(const Liquid &liquid)
 {
     Database::listLiquidResidues.push_back(liquid);
+    
 }
 
 void Database::createItem(const CollectPoint &collectPoint)

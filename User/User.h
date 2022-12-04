@@ -2,7 +2,7 @@
 #define USER_H
 
 #include <string>
-#include <list>
+#include <vector>
 #include <fstream>
 #include "../Residue/Residue.h"
 class User
@@ -15,20 +15,22 @@ protected:
     std::string name;
     std::string login;
     std::string password;
+    std::string adress;
     int document;
-    std::list<Residue> residuesInterest;
-    User(std::string name, std::string login, std::string password, int document);
+    std::vector<Residue> residuesInterest;
+    User(std::string name, std::string login, std::string password, int document, std::string adress);
 
 public:
     User();
     std::string getName();
     int getDocument();
     std::string getLogin();
-    std::list<Residue> &getResiduesInterest();
+    std::string getAdress();
+    std::vector<Residue> &getResiduesInterest();
     int getId();
     bool checkPassword(std::string password);
     void setName(std::string name);
-    void setResiudesInterest(Residue residue);
+    void setResiduesInterest(Residue residue);
 
     ~User();
 };

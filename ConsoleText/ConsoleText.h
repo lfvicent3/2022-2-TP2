@@ -4,6 +4,7 @@
 #include <iostream>
 #include <string>
 #include "../User/User.h"
+
 class ConsoleText
 {
 private:
@@ -16,7 +17,7 @@ public:
     static int printMenuAcessoCadastro();
     static int printMenuSelectUserType();
     static void printMenuAutenticaUsuario(std::string &login, std::string &password);
-    static void printMenuCadastraUsuario(std::string &name, std::string &login, std::string &password, int &document);
+    static void printMenuCadastraUsuario(std::string &name, std::string &login, std::string &password, int &document, std::string &adress);
     static void printBemVindo(User &user);
     static int printMenuOqueFazer(int userType);
     static int printCadastroResiduos();
@@ -24,6 +25,8 @@ public:
     static void printCadastroResiduoLiquido(std::string &name, std::string &help);
     static void printCadastroPontoColeta(std::string &nameRua, std::string &nameBairro, std::string &cep, std::string &referencia);
     static void printAgendamentoColeta(std::string &data, std::string &horario, int &local);
+    static void printEndereco(User &user,std::string &data, std::string &horario);
+    
 };
 
 #endif

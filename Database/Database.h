@@ -22,6 +22,7 @@ private:
     int searchItem(Solid solid);
     int searchItem(Liquid liquid);
     int searchItem(CollectPoint collectPoint);
+    
 
 public:
     Database();
@@ -31,6 +32,8 @@ public:
     void createItem(const Solid &solid);
     void createItem(const Liquid &liquid);
     void createItem(const CollectPoint &collectPoint);
+    //void printItem(Solid solid);
+    //void printItem(Liquid liquid);
     const std::vector<Donor> &readDonorUsers();
     const std::vector<Receiver> &readReceiverUsers();
     const std::vector<Solid> &readSolidResidues();
