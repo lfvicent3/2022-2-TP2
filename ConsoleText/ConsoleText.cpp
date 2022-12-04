@@ -116,7 +116,7 @@ int ConsoleText::printMenuOqueFazer(int userType)
 
     if (userType == 1)
     {
-        std::cout << "3 - Verificar agendamentos de coleta\n";
+        std::cout << "3 - Agendar entrega de residuos\n";
     }
     else
     {
@@ -200,6 +200,27 @@ int ConsoleText::printEditProfile()
     std::cout << "===== EDITAR PERFIL =====\n";
     std::cout << "1 - Editar o endereco de coleta\n";
     std::cout << "2 - Editar o nome\n";
+    std::cout << "Informe o numero: ";
+    return ConsoleText::getIntOption(
+        ConsoleText::validateOpInt2,
+        "O valor deve ser entre 1 e 3.\nTente novamente: ");
+}
+
+int ConsoleText::printMenuAgendamento()
+{
+    std::cout << "===== AGENDAMENTOS =====\n";
+
+    if (userType == 1)
+    {
+        std::cout << "1 - Criar um agendamento para entrega\n";
+        std::cout << "2 - Verificar agendamentos pendentes\n";
+    }
+    else
+    {
+        std::cout << "1 - Criar um agendamento para coleta\n";
+        std::cout << "2 - Verificar agendamentos pendentes\n";
+        std::cout << "3 - Atualizar status do agendamento\n";
+    }
     std::cout << "Informe o numero: ";
     return ConsoleText::getIntOption(
         ConsoleText::validateOpInt2,

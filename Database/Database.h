@@ -16,12 +16,16 @@ private:
     static std::vector<Solid> listSolidResidues;
     static std::vector<Liquid> listLiquidResidues;
     static std::vector<CollectPoint> listCollectPoint;
+    static std::vector<Donor> listDonorInterest;
+    
 
     int searchItem(Donor donor);
     int searchItem(Receiver receiver);
     int searchItem(Solid solid);
     int searchItem(Liquid liquid);
     int searchItem(CollectPoint collectPoint);
+    
+    
     
 
 public:
@@ -33,6 +37,9 @@ public:
     void createItem(const Solid &solid);
     void createItem(const Liquid &liquid);
     void createItem(const CollectPoint &collectPoint);
+    
+    void setReceiverInterest(User &user, int &idResidue);
+    void setDonorInterest(User &user, int &idResidue);
 
 
     const std::vector<Donor> &readDonorUsers();
@@ -40,6 +47,7 @@ public:
     const std::vector<Solid> &readSolidResidues();
     const std::vector<Liquid> &readLiquidResidues();
     const std::vector<CollectPoint> &readCollectPoints();
+
 
     
     void updateItem(const Donor &donor);

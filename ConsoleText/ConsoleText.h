@@ -16,6 +16,7 @@ private:
 public:
     static int printMenuAcessoCadastro();
     static int printMenuSelectUserType();
+    static int printMenuAgendamento(int userType);
     static void printMenuAutenticaUsuario(std::string &login, std::string &password);
     static void printMenuCadastraUsuario(std::string &name, std::string &login, std::string &password, int &document, std::string &adress);
     static void printBemVindo(User &user);

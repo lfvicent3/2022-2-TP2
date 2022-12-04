@@ -7,7 +7,6 @@ std::vector<Solid> Database::listSolidResidues = std::vector<Solid>();
 std::vector<Liquid> Database::listLiquidResidues = std::vector<Liquid>();
 std::vector<CollectPoint> Database::listCollectPoint = std::vector<CollectPoint>();
 
-
 Database::Database() {}
 
 void Database::fakePopulate()
@@ -32,13 +31,7 @@ void Database::fakePopulate()
     this->createItem(Receiver("Vitoria Ferreira", "receiver", "receiver", 1234567899, "rua dos passos, 112, vicosa mg"));
     this->createItem(Receiver("Luiz Felipe", "receiver", "receiver", 1234567899, "rua dos passos, 112, vicosa mg"));
     this->createItem(Receiver("Julio Cocorico", "receiver", "receiver", 1234567899, "rua dos passos, 112, vicosa mg"));
-
-    // pontos de coleta fake
-
-    // this->createItem(CollectPoint("Rua dos Alfeneiros","Centro","35920-000","Prox ao supermercado amantino"));
-    // this->createItem(CollectPoint("Rua tres","Sao Sebastiao","35920-000","Ao lado da clinica cuide mais"));
 }
-
 
 void Database::printItem()
 {
@@ -46,18 +39,87 @@ void Database::printItem()
     std::cout << "====== SOLIDOS ====== \n";
     for (int i = 0; i < Database::listSolidResidues.size(); i++)
     {
-        std::cout << Database::listSolidResidues[i].getName() << "\n";
+        std::cout << "ID: " << Database::listSolidResidues[i].getId() << " - " << Database::listSolidResidues[i].getName() << "\n";
         std::cout << Database::listSolidResidues[i].getHelp() << "\n";
         std::cout << std::endl;
     }
     std::cout << "====== LIQUIDOS ====== \n";
     for (int i = 0; i < Database::listLiquidResidues.size(); i++)
     {
-        std::cout << Database::listLiquidResidues[i].getName() << std::endl;
+        std::cout << "ID: " << Database::listLiquidResidues[i].getId() << " - " << Database::listLiquidResidues[i].getName() << std::endl;
         std::cout << Database::listLiquidResidues[i].getHelp() << std::endl;
         std::cout << std::endl;
     }
 }
+
+void setDonorInterest(User user, int idResidue)
+{
+    Solid setResidueSolid;
+    Liquid setResidueLiquid;
+
+    for (int j = 0; j < Database::listDonorUsers.size(); j++)
+    {
+        if (Database::listDonorUsers[j].getId() == user.getId())
+        {
+
+            for (int i = 0; i < Database::listSolidResidues.size(); i++)
+            {
+                if (Database::listSolidResidues[i].getId() == idResidue)
+                {
+                    setResidueSolid = Database::listSolidResidues[i];
+                    Database::listDonorUsers[j].setResiduesInterest(setResidueSolid);
+                }
+
+            }
+            for (int i = 0; i < Database::listLiquidResidues.size(); i++)
+            {
+                if (Database::listLiquidResidues[i].getId() == idResidue)
+                {
+                    setResidueLiquid = Database::listLiquidResidues[i];
+                    Database::listDonorUsers[j].setResiduesInterest(setResidueLiquid);
+                }
+            }
+            
+        }
+        
+    }
+    
+}
+
+void setReceiverInterest(User user, int idResidue)
+{
+    Solid setResidueSolid;
+    Liquid setResidueLiquid;
+
+    for (int j = 0; j < Database::listReceiverUsers.size(); j++)
+    {
+        if (Database::listReceiverUsers[j].getId() == user.getId())
+        {
+
+            for (int i = 0; i < Database::listSolidResidues.size(); i++)
+            {
+                if (Database::listSolidResidues[i].getId() == idResidue)
+                {
+                    setResidueSolid = Database::listSolidResidues[i];
+                    Database::listReceiverUsers[j].setResiduesInterest(setResidueSolid);
+                }
+            }
+            for (int i = 0; i < Database::listLiquidResidues.size(); i++)
+            {
+                if (Database::listLiquidResidues[i].getId() == idResidue)
+                {
+                    setResidueLiquid = Database::listLiquidResidues[i];
+                    Database::listReceiverUsers[j].setResiduesInterest(setResidueLiquid);
+                }
+            }
+            
+        }
+        
+    }
+    
+}
+
+
 
 int Database::searchItem(Donor donor)
 {
@@ -134,13 +196,11 @@ void Database::createItem(const Receiver &receiver)
 void Database::createItem(const Solid &solid)
 {
     Database::listSolidResidues.push_back(solid);
-    
 }
 
 void Database::createItem(const Liquid &liquid)
 {
     Database::listLiquidResidues.push_back(liquid);
-    
 }
 
 void Database::createItem(const CollectPoint &collectPoint)
