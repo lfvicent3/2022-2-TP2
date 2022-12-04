@@ -32,6 +32,8 @@ public:
     static int printGerenciarResiduos (int userType);
     static int printEditProfile ();
 
+    static int printNaoHaMatch();
+
     
 };
 

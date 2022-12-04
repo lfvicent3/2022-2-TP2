@@ -206,6 +206,16 @@ int ConsoleText::printEditProfile()
         "O valor deve ser entre 1 e 3.\nTente novamente: ");
 }
 
+int ConsoleText::printNaoHaMatch(){
+    std::cout << "Desculpe, nao ha pessoas coletando esse residuo no momento :( \nTente novamente mais tarde. \n\n" ;
+    std::cout << "1 - Voltar ao menu iniciar\n";
+    std::cout << "2 - Encerrar programa\n";
+    std::cout << "Informe o numero: ";
+    return ConsoleText::getIntOption(
+        ConsoleText::validateOpInt,
+        "O valor deve ser entre 1 e 2.\nTente novamente: ");
+}
+
 int ConsoleText::printMenuAgendamento(int userType)
 {
     std::cout << "===== AGENDAMENTOS =====\n";

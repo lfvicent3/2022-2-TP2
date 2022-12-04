@@ -14,20 +14,26 @@ class Scheduling
 private:
     Donor donor;
     Receiver receiver;
-    std::list<Residue> residues;
-    tm collectDate;
-    CollectPoint collectPoint;
+    int idResidue;
+    std::string data;
+    std::string hora;
+    std::string pontoColeta;
     bool effective;
+    static int generatedIds;
+    int id;
 
 public:
-    Scheduling(Donor donor, Receiver receiver, std::list<Residue> residues, tm collectDate, CollectPoint collectPoint);
+    Scheduling(Donor donor, Receiver receiver, int idResidue, std::string pontoColeta, std::string data, std::string hora);
     Donor getDonor();
     Receiver getReceiver();
-    std::list<Residue> getResidues();
-    tm getCollectDate();
-    CollectPoint getCollectPoint();
+    int getIdResidue();
+    std::string getData();
+    std::string getHora();
+    std::string setPontoColeta(std::string pontoColeta);
+    std::string getPontoColeta();
     bool getEffective();
-    void setEffective(bool effective);                       
+    void setEffective(bool effective);     
+    int getId();                  
     ~Scheduling();
 };
 

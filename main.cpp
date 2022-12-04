@@ -12,7 +12,6 @@
 
 // para compilar: g++ **/**.cpp main.cpp
 
-
 int main()
 {
     User currentUser;
@@ -99,59 +98,59 @@ inicio:
             
             int idResiduo;
             // doador
-            system ("CLS");
-            std::cout << "===== RESIDUOS DISPONIVEIS PARA DOACAO ===== \n\n"<< std::flush;
+            system("CLS");
+            std::cout << "===== RESIDUOS DISPONIVEIS PARA DOACAO ===== \n\n"
+                      << std::flush;
             db->printItem();
             std::cout << "\nDigite o id do residuo escolhido: ";
             std::cin >> idResiduo;
 
-            db->setDonorInterest(currentUser,idResiduo);
-            
+            db->setDonorInterest(currentUser, idResiduo);
 
-            goto inicio;
+            system("CLS");
 
+            std::cout << "===== BUSCANDO MATCH ===== \n\n"
+                      << std::flush;
 
-        }
-        else if (manageResidue == 1 && doadorOuReceptor == 2)
-        {
-            // receptor 
-            int idResiduo;
-            
-            system ("CLS");
-            std::cout << "===== RESIDUOS DISPONIVEIS PARA COLETA ===== \n\n"<< std::flush;
-            db->printItem();
-            std::cout << "\nDigite o id do residuo escolhido: ";
-            std::cin >> idResiduo;
+            int match = db->deuMatch(currentUser, doadorOuReceptor);
 
-            db->setReceiverInterest(currentUser,idResiduo);
-
-            system ("CLS");
-            
-            
-            std::cout << "===== BUSCANDO MATCH ===== \n\n" << std::flush;
-
-            int match = db->findMatch(currentUser, idResiduo);
-            
-            if (match == 0) {
-                int resp;
-                std::cout << "Desculpe, não ha pessoas coletando esse residuo no momento :( \nTente novamente mais tarde. \n\n" 
-
-                std::cout << "1 - Voltar ao menu principal\n";
-                std::cout << "2 - Sair do programa \n";
-                std::cin >> resp;
-
-                if (resp == 1) {
+            if (match == -1)
+            {
+                int op = ConsoleText::printNaoHaMatch();
+                if (op == 1)
+                {
                     goto inicio;
-                } else if (resp == 2) {
+                }
+                else if (op == 2)
+                {
                     return 0;
                 }
             }
-            else if (match > 0) {
-                int novoMatch; 
-                novoMatch = ConsoleText::printMenuMatch();
+            else
+            {
+                db->findMatch(currentUser, doadorOuReceptor);
             }
-            
+        }
+        else if (manageResidue == 1 && doadorOuReceptor == 2)
+        {
+            // receptor
+            int idResiduo;
 
+            system("CLS");
+            std::cout << "===== RESIDUOS DISPONIVEIS PARA COLETA ===== \n\n"
+                      << std::flush;
+            db->printItem();
+            std::cout << "\nDigite o id do residuo escolhido: ";
+            std::cin >> idResiduo;
+
+            db->setReceiverInterest(currentUser, idResiduo);
+
+            system("CLS");
+
+            std::cout << "===== BUSCANDO MATCH ===== \n\n"
+                      << std::flush;
+
+            db->findMatch(currentUser, doadorOuReceptor);
         }
         else if (manageResidue == 2)
         {
@@ -170,14 +169,10 @@ inicio:
                 db->createItem(Liquid(nome_residuo, descarte_residuo));
             }
 
-            std::cout << "\nResiduo cadastrado com sucesso!" ;
-
+            std::cout << "\nResiduo cadastrado com sucesso!";
 
             goto inicio;
-
-
         }
-        
     }
     else if (oQFazer == 2)
     {
@@ -214,7 +209,6 @@ inicio:
         ConsoleText::printAgendamentoColeta(data, horario, local);
         if (local == 1)
         {
-            
         }
         else if (local == 2)
         {

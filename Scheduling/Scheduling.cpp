@@ -1,12 +1,19 @@
 #include "Scheduling.h"
 
-Scheduling::Scheduling(Donor donor, Receiver receiver, std::list<Residue> residues, tm collectDate, CollectPoint collectPoint)
+int Scheduling::generatedIds = 0;
+
+Scheduling::Scheduling(Donor donor, Receiver receiver, int idResidue, std::string pontoColeta, std::string data, std::string hora)
 {
     this->donor = donor;
     this->receiver = receiver;
-    this->residues = residues;
-    this->collectDate = collectDate;
-    this->collectPoint = collectPoint;
+    this->idResidue = idResidue;
+    this->pontoColeta = pontoColeta;
+    this->data = data;
+    this->hora = hora;
+
+    this->id = Scheduling::generatedIds;
+
+    Scheduling::generatedIds++;
 }
 
 Donor Scheduling::getDonor()
@@ -19,19 +26,29 @@ Receiver Scheduling::getReceiver()
     return this->receiver;
 }
 
-std::list<Residue> Scheduling::getResidues()
+int Scheduling::getIdResidue()
 {
-    return this->residues;
+    return this->idResidue;
 }
 
-tm Scheduling::getCollectDate()
+std::string Scheduling::getData()
 {
-    return this->collectDate;
+    return this->data;
 }
 
-CollectPoint Scheduling::getCollectPoint()
+std::string Scheduling::getHora()
 {
-    return this->collectPoint;
+    return this->hora;
+}
+
+std::string Scheduling::getPontoColeta()
+{
+    return this->pontoColeta;
+}
+
+std::string Scheduling::setPontoColeta(std::string pontoColeta)
+{
+    return this->pontoColeta;
 }
 
 bool Scheduling::getEffective()
@@ -42,4 +59,13 @@ bool Scheduling::getEffective()
 void Scheduling::setEffective(bool effective)
 {
     this->effective = effective;
+}
+
+int Scheduling::getId()
+{
+    return this->id;
+}
+
+Scheduling::~Scheduling()
+{
 }
