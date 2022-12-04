@@ -25,7 +25,12 @@ public:
     static void printCadastroResiduoLiquido(std::string &name, std::string &help);
     static void printCadastroPontoColeta(std::string &nameRua, std::string &nameBairro, std::string &cep, std::string &referencia);
     static void printAgendamentoColeta(std::string &data, std::string &horario, int &local);
+
     static void printEndereco(User &user,std::string &data, std::string &horario);
+
+    static int printGerenciarResiduos (int userType);
+    static int printEditProfile ();
+
     
 };
 

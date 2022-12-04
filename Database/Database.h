@@ -27,18 +27,21 @@ private:
 public:
     Database();
     void fakePopulate();
+    void printItem();
     void createItem(const Donor &donor);
     void createItem(const Receiver &receiver);
     void createItem(const Solid &solid);
     void createItem(const Liquid &liquid);
     void createItem(const CollectPoint &collectPoint);
-    //void printItem(Solid solid);
-    //void printItem(Liquid liquid);
+
+
     const std::vector<Donor> &readDonorUsers();
     const std::vector<Receiver> &readReceiverUsers();
     const std::vector<Solid> &readSolidResidues();
     const std::vector<Liquid> &readLiquidResidues();
     const std::vector<CollectPoint> &readCollectPoints();
+
+    
     void updateItem(const Donor &donor);
     void updateItem(const Receiver &receiver);
     void updateItem(const Solid &solid);

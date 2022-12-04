@@ -7,6 +7,7 @@ std::vector<Solid> Database::listSolidResidues = std::vector<Solid>();
 std::vector<Liquid> Database::listLiquidResidues = std::vector<Liquid>();
 std::vector<CollectPoint> Database::listCollectPoint = std::vector<CollectPoint>();
 
+
 Database::Database() {}
 
 void Database::fakePopulate()
@@ -38,30 +39,25 @@ void Database::fakePopulate()
     // this->createItem(CollectPoint("Rua tres","Sao Sebastiao","35920-000","Ao lado da clinica cuide mais"));
 }
 
-/*
-void Database::printItem(Solid solid)
+
+void Database::printItem()
 {
 
     std::cout << "====== SOLIDOS ====== \n";
     for (int i = 0; i < Database::listSolidResidues.size(); i++)
     {
-        std::cout << Database::listSolidResidues[i].getName << "\n";
-        std::cout << Database::listSolidResidues[i].getHelp << "\n";
+        std::cout << Database::listSolidResidues[i].getName() << "\n";
+        std::cout << Database::listSolidResidues[i].getHelp() << "\n";
         std::cout << std::endl;
     }
-}
-
-void Database::printItem(Liquid liquid)
-{
     std::cout << "====== LIQUIDOS ====== \n";
     for (int i = 0; i < Database::listLiquidResidues.size(); i++)
     {
-        std::cout << Database::listLiquidResidues[i].getName << std::endl;
-        std::cout << Database::listLiquidResidues[i].getHelp << std::endl;
+        std::cout << Database::listLiquidResidues[i].getName() << std::endl;
+        std::cout << Database::listLiquidResidues[i].getHelp() << std::endl;
         std::cout << std::endl;
     }
 }
-*/
 
 int Database::searchItem(Donor donor)
 {

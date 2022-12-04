@@ -31,6 +31,8 @@ public:
     bool checkPassword(std::string password);
     void setName(std::string name);
     void setResiduesInterest(Residue residue);
+    void setAdress(std::string adress);
+
 
     ~User();
 };

@@ -28,7 +28,7 @@ std::string User::getLogin()
 
 std::string User::getAdress()
 {
-    return this->adress; 
+    return this->adress;
 }
 
 std::vector<Residue> &User::getResiduesInterest()
@@ -56,8 +56,13 @@ void User::setName(std::string name)
     this->name = name;
 }
 
+void User::setAdress(std::string adress)
+{
+    this->adress = adress;
+}
 
-void User::setResiudesInterest(Residue residue)
+
+void User::setResiduesInterest(Residue residue)
 {
     this->residuesInterest.push_back(residue);
 }
@@ -66,7 +71,6 @@ int User::getDocument()
 {
     return this->document;
 }
-
 
 User::~User()
 {
