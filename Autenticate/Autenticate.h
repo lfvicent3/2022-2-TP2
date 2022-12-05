@@ -4,10 +4,10 @@
 #include <string>
 #include <exception>
 
-#include "../Database/Database.h"
 #include "../User/User.h"
 #include "../User/Donor.h"
 #include "../User/Receiver.h"
+#include "../Database/Database.h"
 
 class Autenticate
 {

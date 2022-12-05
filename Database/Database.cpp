@@ -11,6 +11,13 @@ std::vector<Scheduling> Database::listScheduling = std::vector<Scheduling>();
 
 Database::Database() {}
 
+/**
+ * @brief Responsável por criar dados ficticios no programa.
+ * Exemplo:
+ * - Residuos Papel, Metal e Oléo.
+ * - Usuário receptor Login: receiver, password: receiver
+ * - Usuário doador Login: doador, password:doador
+ */
 void Database::fakePopulate()
 {
 
@@ -26,14 +33,14 @@ void Database::fakePopulate()
     // pessoas fake
 
     this->createItem(Donor("Cleiton Baiano", "donor", "donor", 123456789, "rua dos passos, 112, vicosa mg"));
-    this->createItem(Donor("Neymar Junior", "donor", "donor", 123456789, "rua dos passos, 112, vicosa mg"));
-    this->createItem(Donor("Isabella Swan", "donor", "donor", 123456789, "rua dos passos, 112, vicosa mg"));
-    this->createItem(Donor("Maria da Penha", "donor", "donor", 123456789, "rua dos passos, 112, vicosa mg"));
+    this->createItem(Donor("Neymar Junior", "donor2", "donor", 123456789, "rua dos passos, 112, vicosa mg"));
+    this->createItem(Donor("Isabella Swan", "donor3", "donor", 123456789, "rua dos passos, 112, vicosa mg"));
+    this->createItem(Donor("Maria da Penha", "donor4", "donor", 123456789, "rua dos passos, 112, vicosa mg"));
 
     this->createItem(Receiver("Katia Maria", "receiver", "receiver", 1234567899, "rua dos passos, 112, vicosa mg"));
-    this->createItem(Receiver("Vitoria Ferreira", "receiver", "receiver", 1234567899, "rua dos passos, 112, vicosa mg"));
-    this->createItem(Receiver("Luiz Felipe", "receiver", "receiver", 1234567899, "rua dos passos, 112, vicosa mg"));
-    this->createItem(Receiver("Julio Cocorico", "receiver", "receiver", 1234567899, "rua dos passos, 112, vicosa mg"));
+    this->createItem(Receiver("Vitoria Ferreira", "receiver1", "receiver", 1234567899, "rua dos passos, 112, vicosa mg"));
+    this->createItem(Receiver("Luiz Felipe", "receiver2", "receiver", 1234567899, "rua dos passos, 112, vicosa mg"));
+    this->createItem(Receiver("Julio Cocorico", "receiver3", "receiver", 1234567899, "rua dos passos, 112, vicosa mg"));
 
     // setando interesses,
     std::srand(std::time(nullptr));
@@ -47,14 +54,6 @@ void Database::fakePopulate()
     {
         int num = (std::rand() % 10);
         Database::listReceiverUsers[j].setResiduesInterest(num);
-    }
-
-    std::cout << "===== teste ====== \n";
-    for (int i = 0; i < Database::listDonorUsers.size(); i++)
-    {
-        std::cout << "NOME: " << Database::listDonorUsers[i].getName() << " - " << Database::listDonorUsers[i].getName() << std::endl;
-        std::cout << "INTERESSE: " << Database::listDonorUsers[i].getResiduesInterest() << std::endl;
-        std::cout << std::endl;
     }
 }
 
@@ -103,8 +102,6 @@ void Database::setDonorInterest(User user, int idResidue)
                     Database::listDonorUsers[j].setResiduesInterest(idInterest);
                 }
             }
-
-            std::cout << listDonorUsers[j].getResiduesInterest();
         }
     }
 }
@@ -140,18 +137,15 @@ void Database::setReceiverInterest(User user, int idResidue)
 }
 
 // procurando matchs
-int Database::deuMatch(User user, int userType)
+bool Database::deuMatch(User user, int userType)
 {
-    
-
     if (userType == 1) // doador
     {
-
         for (int i = 0; i < Database::listReceiverUsers.size(); i++)
         {
             if (user.getResiduesInterest() == Database::listReceiverUsers[i].getResiduesInterest())
             {
-              return 1;
+                return true;
             }
         }
     }
@@ -161,17 +155,13 @@ int Database::deuMatch(User user, int userType)
         {
             if (user.getResiduesInterest() == Database::listDonorUsers[i].getResiduesInterest())
             {
-                return 1;
+                return true;
             }
         }
     }
 
-    return -1;
-   
-    
+    return false;
 }
-
-
 
 void Database::findMatch(User user, int userType)
 {
@@ -185,39 +175,45 @@ void Database::findMatch(User user, int userType)
             if (user.getResiduesInterest() == Database::listReceiverUsers[i].getResiduesInterest())
             {
                 qntMatch++;
-                std::cout << "Eba! Voce deu um Match com ";
-                std::cout << Database::listReceiverUsers[i].getName();
-                std::cout << "Agora vamos agendar a entrega dos residuos!";
                 break;
+            }
+
+            if (qntMatch == 0)
+            {
+
+                std::cout << "Desculpe, nao ha pessoas coletando esse residuo no momento :( \nTente novamente mais tarde. \n\n";
+            }
+            else
+            {
+                std::cout << "Eba! Voce deu um Match com ao menos um usuário do sistema.";
+                std::cout << "Agora basta agendar a entrega dos residuos e aguardar que sejam coletados!";
             }
         }
     }
     else
     { // receptor
+        qntMatch = 0;
         for (int i = 0; i < Database::listDonorUsers.size(); i++)
         {
             if (user.getResiduesInterest() == Database::listDonorUsers[i].getResiduesInterest())
             {
                 qntMatch++;
-                std::cout << "Eba! Voce deu um Match com ";
-                std::cout << Database::listDonorUsers[i].getName();
-                std::cout << "Agora vamos agendar a coleta dos residuos!";
                 break;
             }
         }
+
+        if (qntMatch == 0)
+        {
+
+            std::cout << "Desculpe, nao ha pessoas doando esse residuo no momento :( \nTente novamente mais tarde. \n\n";
+        }
+        else
+        {
+            std::cout << "Eba! Voce deu um Match com ao menos um usuário do sistema.";
+            std::cout << "Agora basta agendar a coleta dos residuos e ir coletar!";
+        }
     }
-
-    if (qntMatch == 0) {
-
-        std::cout << "Desculpe, nao ha pessoas coletando esse residuo no momento :( \nTente novamente mais tarde. \n\n" ;
-    }
-
-    
 }
-
-
-
-
 
 int Database::searchItem(Donor donor)
 {
@@ -302,7 +298,7 @@ void Database::createItem(const Liquid &liquid)
 }
 
 void Database::createItem(const Scheduling
- &scheduling)
+                              &scheduling)
 {
     Database::listScheduling.push_back(scheduling);
 }

@@ -18,6 +18,7 @@ public:
     std::string getName();
     virtual std::string getHelp() const;
     int getId();
+    static int getGeneratedMaxId();
     ~Residue();
 };
 #endif

@@ -3,6 +3,7 @@
 #include <string>
 #include <exception>
 
+#include "Database/Database.h"
 #include "ConsoleText/ConsoleText.h"
 #include "Autenticate/Autenticate.h"
 #include "User/User.h"
@@ -18,6 +19,7 @@ int main()
     Database *db = new Database();
     db->fakePopulate();
 
+login:
     int accessoOuCadastro = ConsoleText::printMenuAcessoCadastro();
     int doadorOuReceptor = ConsoleText::printMenuSelectUserType();
 
@@ -25,10 +27,10 @@ int main()
     if (accessoOuCadastro == 1)
     {
         std::string login, password;
-        ConsoleText::printMenuAutenticaUsuario(login, password);
 
         while (true)
         {
+            ConsoleText::printMenuAutenticaUsuario(login, password);
             try
             {
                 currentUser = auth->login(login, password, doadorOuReceptor);
@@ -36,6 +38,7 @@ int main()
             catch (const std::invalid_argument &e)
             {
                 std::cerr << e.what() << '\n';
+                std::cin.get();
                 continue;
             }
 
@@ -46,11 +49,10 @@ int main()
     {
         std::string name, login, password, adress;
         int document;
-        ConsoleText::printMenuCadastraUsuario(name, login, password, document, adress);
-        // tratar excessao
 
         while (true)
         {
+            ConsoleText::printMenuCadastraUsuario(name, login, password, document, adress);
             try
             {
                 auth->cadastro(name, login, password, document, adress, doadorOuReceptor);
@@ -58,17 +60,16 @@ int main()
             catch (const std::invalid_argument &e)
             {
                 std::cerr << e.what() << '\n';
+                std::cin.get();
                 continue;
             }
 
             break;
         }
 
-        ConsoleText::printMenuAutenticaUsuario(login, password);
-        // tratar excessao
-
         while (true)
         {
+            ConsoleText::printMenuAutenticaUsuario(login, password);
             try
             {
                 currentUser = auth->login(login, password, doadorOuReceptor);
@@ -76,6 +77,7 @@ int main()
             catch (const std::invalid_argument &e)
             {
                 std::cerr << e.what() << '\n';
+                std::cin.get();
                 continue;
             }
 
@@ -95,26 +97,13 @@ inicio:
         int manageResidue = ConsoleText::printGerenciarResiduos(doadorOuReceptor);
         if (manageResidue == 1 && doadorOuReceptor == 1)
         {
-            
-            int idResiduo;
-            // doador
-            system("CLS");
-            std::cout << "===== RESIDUOS DISPONIVEIS PARA DOACAO ===== \n\n"
-                      << std::flush;
-            db->printItem();
-            std::cout << "\nDigite o id do residuo escolhido: ";
-            std::cin >> idResiduo;
-
+            int idResiduo = ConsoleText::printSelectResiduo();
             db->setDonorInterest(currentUser, idResiduo);
-
-            system("CLS");
 
             std::cout << "===== BUSCANDO MATCH ===== \n\n"
                       << std::flush;
 
-            int match = db->deuMatch(currentUser, doadorOuReceptor);
-
-            if (match == -1)
+            if (!db->deuMatch(currentUser, doadorOuReceptor))
             {
                 int op = ConsoleText::printNaoHaMatch();
                 if (op == 1)
@@ -123,7 +112,7 @@ inicio:
                 }
                 else if (op == 2)
                 {
-                    return 0;
+                    goto login;
                 }
             }
             else
@@ -214,14 +203,23 @@ inicio:
         {
             ConsoleText::printEndereco(currentUser, data, horario);
         }
+        
     }
-    else
+    else if (oQFazer == 3 && doadorOuReceptor == 2)
     {
 
         // Listar agendamentos de coleta;
     }
+    else if (oQFazer == 4)
+    {
+        goto login;
+    }
+    else
+    {
+        delete db;
+        return 0;
+    }
 
     delete db;
-
     return 0;
 }

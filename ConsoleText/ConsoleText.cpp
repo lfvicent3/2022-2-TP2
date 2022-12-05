@@ -1,9 +1,12 @@
 #include "ConsoleText.h"
 #include <vector>
 
+int ConsoleText::customValidateArraySize = 0;
+int ConsoleText::initCustomValidateArraySize = 0;
+
 int ConsoleText::getIntOption(bool(validateEntrada)(int), const std::string &erroMessage)
 {
-    std::string opSelect;
+    std::string opSelect = "";
     std::getline(std::cin, opSelect);
 
     try
@@ -26,7 +29,6 @@ int ConsoleText::getIntOption(bool(validateEntrada)(int), const std::string &err
         {
             std::cerr << e.what();
         }
-
         return ConsoleText::getIntOption(validateEntrada, erroMessage);
     }
 }
@@ -46,8 +48,14 @@ bool ConsoleText::notValidate(int op)
     return false;
 }
 
+bool ConsoleText::customValidate(int op)
+{
+    return (op < ConsoleText::initCustomValidateArraySize || op > ConsoleText::customValidateArraySize);
+}
+
 int ConsoleText::printMenuAcessoCadastro()
 {
+    system("clear");
     std::cout << "===== SELECIONE O TIPO DE ACESSO =====\n";
     std::cout << "1 - Acessar\n";
     std::cout << "2 - Cadastrar\n";
@@ -59,6 +67,7 @@ int ConsoleText::printMenuAcessoCadastro()
 
 int ConsoleText::printMenuSelectUserType()
 {
+    system("clear");
     std::cout << "===== SELECIONE O TIPO DE USUARIO =====\n";
     std::cout << "1 - Doador\n";
     std::cout << "2 - Receptor\n";
@@ -70,6 +79,7 @@ int ConsoleText::printMenuSelectUserType()
 
 void ConsoleText::printMenuAutenticaUsuario(std::string &login, std::string &password)
 {
+    system("clear");
     std::cout << "===== LOGUE NO SISTEMA =====\n";
     std::cout << "Informe o usuario: ";
     std::getline(std::cin, login);
@@ -79,6 +89,7 @@ void ConsoleText::printMenuAutenticaUsuario(std::string &login, std::string &pas
 
 void ConsoleText::printMenuCadastraUsuario(std::string &name, std::string &login, std::string &password, int &document, std::string &adress)
 {
+    system("clear");
     std::cout << "===== CADASTRE-SE =====\n";
     std::cout << "Informe o Nome: ";
     std::getline(std::cin, name);
@@ -94,6 +105,7 @@ void ConsoleText::printMenuCadastraUsuario(std::string &name, std::string &login
 
 void ConsoleText::printBemVindo(User &user)
 {
+    system("clear");
     std::cout << "Bem vindo(a), " << user.getName()
               << "!\nDocumento: " << user.getDocument()
               << std::endl;
@@ -101,6 +113,7 @@ void ConsoleText::printBemVindo(User &user)
 
 void ConsoleText::printEndereco(User &user, std::string &data, std::string &horario)
 {
+    system("clear");
     std::cout << " === AGENDAMENTO === \n";
     std::cout << "Agendamento marcado para o dia " << data << " as " << horario << std::endl;
     std::cout << "O local de entrega sera no seguinte endereco: \n"
@@ -109,7 +122,6 @@ void ConsoleText::printEndereco(User &user, std::string &data, std::string &hora
 
 int ConsoleText::printMenuOqueFazer(int userType)
 {
-
     std::cout << "===== O QUE DESEJA FAZER =====\n";
     std::cout << "1 - Doar/Coletar um residuo\n";
     std::cout << "2 - Editar perfil\n";
@@ -122,16 +134,22 @@ int ConsoleText::printMenuOqueFazer(int userType)
     {
         std::cout << "3 - Agendar coleta\n";
     }
+    std::cout << "4 - Sair\n";
+    std::cout << "5 - Encerrar programa \n";
     std::cout << "Informe o numero: ";
+
+    ConsoleText::initCustomValidateArraySize = 1;
+    ConsoleText::customValidateArraySize = 5;
     return ConsoleText::getIntOption(
-        ConsoleText::validateOpInt2,
-        "O valor deve ser entre 1 e 3.\nTente novamente: ");
+        ConsoleText::customValidate,
+        "O valor deve ser entre 1 e 5.\nTente novamente: ");
 }
 
 // mostrar a lista de residuos cadastrados e definir qual residuo o doador tem pra doar.
 
 int ConsoleText::printGerenciarResiduos(int userType)
 {
+    system("clear");
     std::cout << "===== GERENCIAMENTO DE RESIDUOS =====\n";
 
     if (userType == 1)
@@ -152,6 +170,7 @@ int ConsoleText::printGerenciarResiduos(int userType)
 
 int ConsoleText::printCadastroResiduos()
 {
+    system("clear");
     std::cout << "===== CADASTRO RESIDUOS =====\n";
     std::cout << "1 - Residuo Solido\n";
     std::cout << "2 - Residuo Liquido\n";
@@ -163,6 +182,7 @@ int ConsoleText::printCadastroResiduos()
 
 void ConsoleText::printCadastroResiduoSolido(std::string &name, std::string &help)
 {
+    system("clear");
     std::cout << "===== RESIDUO SOLIDO =====\n";
     std::cout << "Nome do residuo: ";
     std::getline(std::cin, name);
@@ -172,6 +192,7 @@ void ConsoleText::printCadastroResiduoSolido(std::string &name, std::string &hel
 
 void ConsoleText::printCadastroResiduoLiquido(std::string &name, std::string &help)
 {
+    system("clear");
     std::cout << "===== RESIDUO LIQUIDO =====\n";
     std::cout << "Nome do residuo: ";
     std::getline(std::cin, name);
@@ -197,17 +218,20 @@ void ConsoleText::printCadastroPontoColeta(std::string &nameRua, std::string &na
 
 int ConsoleText::printEditProfile()
 {
+    system("clear");
     std::cout << "===== EDITAR PERFIL =====\n";
     std::cout << "1 - Editar o endereco de coleta\n";
     std::cout << "2 - Editar o nome\n";
     std::cout << "Informe o numero: ";
     return ConsoleText::getIntOption(
         ConsoleText::validateOpInt2,
-        "O valor deve ser entre 1 e 3.\nTente novamente: ");
+        "O valor deve ser entre 1 e 2.\nTente novamente: ");
 }
 
-int ConsoleText::printNaoHaMatch(){
-    std::cout << "Desculpe, nao ha pessoas coletando esse residuo no momento :( \nTente novamente mais tarde. \n\n" ;
+int ConsoleText::printNaoHaMatch()
+{
+    system("clear");
+    std::cout << "Desculpe, nao ha pessoas coletando esse residuo no momento :( \nTente novamente mais tarde. \n\n";
     std::cout << "1 - Voltar ao menu iniciar\n";
     std::cout << "2 - Encerrar programa\n";
     std::cout << "Informe o numero: ";
@@ -218,29 +242,33 @@ int ConsoleText::printNaoHaMatch(){
 
 int ConsoleText::printMenuAgendamento(int userType)
 {
+    system("clear");
     std::cout << "===== AGENDAMENTOS =====\n";
 
     if (userType == 1)
     {
         std::cout << "1 - Criar um agendamento para entrega\n";
         std::cout << "2 - Verificar agendamentos pendentes\n";
+        std::cout << "Informe o numero: ";
+        return ConsoleText::getIntOption(
+            ConsoleText::validateOpInt2,
+            "O valor deve ser entre 1 e 2.\nTente novamente: ");
     }
     else
     {
         std::cout << "1 - Criar um agendamento para coleta\n";
         std::cout << "2 - Verificar agendamentos pendentes\n";
         std::cout << "3 - Atualizar status do agendamento\n";
+
+        return ConsoleText::getIntOption(
+            ConsoleText::validateOpInt2,
+            "O valor deve ser entre 1 e 3.\nTente novamente: ");
     }
-    std::cout << "Informe o numero: ";
-    return ConsoleText::getIntOption(
-        ConsoleText::validateOpInt2,
-        "O valor deve ser entre 1 e 3.\nTente novamente: ");
 }
-
-
 
 void ConsoleText::printAgendamentoColeta(std::string &data, std::string &horario, int &local)
 {
+    system("clear");
     std::cout << "===== AGENDAMENTO DE COLETA ===== \n";
     std::cout << "Insira o dia e o horario ideal para voce realizar essa coleta: \n";
     std::cout << "Dia (DD/MM/AAAA): ";
@@ -255,4 +283,39 @@ void ConsoleText::printAgendamentoColeta(std::string &data, std::string &horario
     local = ConsoleText::getIntOption(
         ConsoleText::validateOpInt,
         "O número deve estar entre 1 e 2.");
+}
+
+int ConsoleText::printSelectResiduo()
+{
+    Database *database = new Database();
+    system("clear");
+    std::cout << "===== RESIDUOS DISPONIVEIS PARA DOACAO ===== \n";
+    std::cout << "====== SOLIDOS ====== \n";
+    for (int i = 0; i < database->readSolidResidues().size(); i++)
+    {
+        Solid solid = database->readSolidResidues()[i];
+        std::cout << "ID: "
+                  << solid.getId() << " - "
+                  << solid.getName() << "\n";
+        std::cout << solid.getHelp() << "\n";
+        std::cout << std::endl;
+    }
+
+    std::cout << "====== LIQUIDOS ====== \n";
+    for (int i = 0; i < database->readLiquidResidues().size(); i++)
+    {
+        Liquid liquid = database->readLiquidResidues()[i];
+        std::cout << "ID: "
+                  << liquid.getId() << " - "
+                  << liquid.getName() << std::endl;
+        std::cout << liquid.getHelp() << std::endl;
+        std::cout << std::endl;
+    }
+    std::cout << "\nDigite o id do residuo escolhido: ";
+
+    ConsoleText::customValidateArraySize = Residue::getGeneratedMaxId();
+    ConsoleText::initCustomValidateArraySize = 0;
+    return ConsoleText::getIntOption(
+        ConsoleText::customValidate,
+        "Insira um id válido.\nTente Novamente: ");
 }
