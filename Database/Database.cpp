@@ -64,8 +64,6 @@ void Database::fakePopulate()
 void Database::setDonorInterest(User user, int idResidue)
 {
 
-    int idInterest;
-
     for (int j = 0; j < Database::listDonorUsers.size(); j++)
     {
         if (Database::listDonorUsers[j].getId() == user.getId())
@@ -75,30 +73,26 @@ void Database::setDonorInterest(User user, int idResidue)
             {
                 if (Database::listSolidResidues[i].getId() == idResidue)
                 {
-                    idInterest = Database::listSolidResidues[i].getId();
-                    Database::listDonorUsers[j].setResiduesInterest(idInterest);
-                    user.setResiduesInterest(idInterest);
+                    Database::listDonorUsers[j].setResiduesInterest(idResidue);
+                    user.setResiduesInterest(idResidue);
                 }
             }
-            for (int i = 0; i < Database::listLiquidResidues.size(); i++)
+            for (int k = 0; k < Database::listLiquidResidues.size(); k++)
             {
-                if (Database::listLiquidResidues[i].getId() == idResidue)
+                if (Database::listLiquidResidues[k].getId() == idResidue)
                 {
-                    idInterest = Database::listLiquidResidues[i].getId();
-                    Database::listDonorUsers[j].setResiduesInterest(idInterest);
-                    user.setResiduesInterest(idInterest);
+                    Database::listDonorUsers[j].setResiduesInterest(idResidue);
+                    user.setResiduesInterest(idResidue);
                 }
             }
         }
     }
-    
-    
+    std::cout << "seu interesse e ";
+    std::cout << user.getResiduesInterest();
 }
 
 void Database::setReceiverInterest(User user, int idResidue)
 {
-    int idInterest;
-
     for (int j = 0; j < Database::listReceiverUsers.size(); j++)
     {
         if (Database::listReceiverUsers[j].getId() == user.getId())
@@ -108,36 +102,32 @@ void Database::setReceiverInterest(User user, int idResidue)
             {
                 if (Database::listSolidResidues[i].getId() == idResidue)
                 {
-                    idInterest = Database::listSolidResidues[i].getId();
-                    Database::listReceiverUsers[j].setResiduesInterest(idInterest);
-                    user.setResiduesInterest(idInterest);
+                    Database::listReceiverUsers[j].setResiduesInterest(idResidue);
+                    user.setResiduesInterest(idResidue);
                 }
             }
             for (int i = 0; i < Database::listLiquidResidues.size(); i++)
             {
                 if (Database::listLiquidResidues[i].getId() == idResidue)
                 {
-
-                    idInterest = Database::listLiquidResidues[i].getId();
-                    Database::listReceiverUsers[j].setResiduesInterest(idInterest);
-                    user.setResiduesInterest(idInterest);
+                    Database::listReceiverUsers[j].setResiduesInterest(idResidue);
+                    user.setResiduesInterest(idResidue);
                 }
             }
         }
     }
-    user.setResiduesInterest(idInterest);
     std::cout << "seu interesse e ";
     std::cout << user.getResiduesInterest();
 }
 
 // procurando matchs
-bool Database::deuMatch(User user, int userType)
+bool Database::deuMatch(int residueInterest, int userType)
 {
     if (userType == 1) // doador
     {
         for (int i = 0; i < Database::listReceiverUsers.size(); i++)
         {
-            if (user.getResiduesInterest() == Database::listReceiverUsers[i].getResiduesInterest())
+            if (residueInterest == Database::listReceiverUsers[i].getResiduesInterest())
             {
                 return true;
             }
@@ -147,7 +137,7 @@ bool Database::deuMatch(User user, int userType)
     { // receptor
         for (int i = 0; i < Database::listDonorUsers.size(); i++)
         {
-            if (user.getResiduesInterest() == Database::listDonorUsers[i].getResiduesInterest())
+            if (residueInterest == Database::listDonorUsers[i].getResiduesInterest())
             {
                 return true;
             }
@@ -157,7 +147,7 @@ bool Database::deuMatch(User user, int userType)
     return false;
 }
 
-void Database::findMatch(User user, int userType)
+void Database::findMatch(int residueInterest, int userType)
 {
     int qntMatch = 0;
 
@@ -166,7 +156,7 @@ void Database::findMatch(User user, int userType)
 
         for (int i = 0; i < Database::listReceiverUsers.size(); i++)
         {
-            if (user.getResiduesInterest() == Database::listReceiverUsers[i].getResiduesInterest())
+            if (residueInterest == Database::listReceiverUsers[i].getResiduesInterest())
             {
                 Receiver donor = Database::listReceiverUsers[i];
                 std::cout << "\n\nID - " << donor.getId()
@@ -180,7 +170,7 @@ void Database::findMatch(User user, int userType)
         qntMatch = 0;
         for (int i = 0; i < Database::listDonorUsers.size(); i++)
         {
-            if (user.getResiduesInterest() == Database::listDonorUsers[i].getResiduesInterest())
+            if (residueInterest == Database::listDonorUsers[i].getResiduesInterest())
             {
                 Donor donor = Database::listDonorUsers[i];
                 std::cout << "ID - " << donor.getId()
@@ -197,7 +187,7 @@ void Database::findMatch(User user, int userType)
     }
     else
     {
-        std::cout << "\nEba! Voce deu um Match com ao menos um usuario do sistema.";
+        std::cout << "\n\nEba! Voce deu um Match com ao menos um usuario do sistema.";
         std::cout << "\nAgora basta agendar a coleta dos residuos e ir coletar!\n";
     }
 }

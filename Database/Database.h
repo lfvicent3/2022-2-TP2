@@ -36,8 +36,8 @@ public:
 
     void setReceiverInterest(User user, int idResidue);
     void setDonorInterest(User user, int idResidue);
-    void findMatch(User user, int userType);
-    bool deuMatch(User user, int userType);
+    void findMatch(int residueInterest, int userType);
+    bool deuMatch(int residueInterest, int userType);
 
     const std::vector<Donor> &readDonorUsers();
     const std::vector<Receiver> &readReceiverUsers();

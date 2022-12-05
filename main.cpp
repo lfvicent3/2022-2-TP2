@@ -97,6 +97,7 @@ inicio:
         if (manageResidue == 1)
         {
             int idResiduo = ConsoleText::printSelectResiduo();
+            
             if (doadorOuReceptor == 1)
             {
                 db.setDonorInterest(currentUser, idResiduo);
@@ -109,7 +110,7 @@ inicio:
             std::cout << "===== BUSCANDO MATCH ===== \n\n"
                       << std::flush;
 
-            if (!db.deuMatch(currentUser, doadorOuReceptor))
+            if (!db.deuMatch(idResiduo, doadorOuReceptor))
             {
                 int op = ConsoleText::printNaoHaMatch();
                 if (op == 1)
@@ -124,7 +125,7 @@ inicio:
             else
             {
                 std::string n;
-                db.findMatch(currentUser, doadorOuReceptor);
+                db.findMatch(idResiduo, doadorOuReceptor);
                 std::cout << "Digite o id do usuario: ";
                 std::getline(std::cin, n);
                 int b = std::stoi(n);
@@ -152,9 +153,10 @@ inicio:
                     db.createItem(Scheduling(d, t, idResiduo, currentUser.getAdress(), data, horario));
                 }
 
-                goto inicio;
+                
             }
         }
+        goto inicio;
         else if (manageResidue == 2)
         {
             // cadastrar um residuo

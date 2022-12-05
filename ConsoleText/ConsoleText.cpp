@@ -347,7 +347,7 @@ bool ConsoleText::printAgendamentos(User user)
 int ConsoleText::printAgendamentosOqueFazer()
 {
     std::cout << "1 - Editar agendamento\n"
-              << "2 - Marcar agendamento como concluído\n"
+              << "2 - Marcar agendamento como concluido\n"
               << "3 - Voltar ao menu"
               << std::endl;
 
