@@ -9,15 +9,14 @@
 #include "User/User.h"
 #include "Residue/Solid.h"
 #include "Residue/Liquid.h"
-#include "CollectPoint/CollectPoint.h"
 
 // para compilar: g++ **/**.cpp main.cpp
 
 int main()
 {
     User currentUser;
-    Database *db = new Database();
-    db->fakePopulate();
+    Database db = Database();
+    db.fakePopulate();
 
 login:
     int accessoOuCadastro = ConsoleText::printMenuAcessoCadastro();
@@ -95,15 +94,22 @@ inicio:
     {
 
         int manageResidue = ConsoleText::printGerenciarResiduos(doadorOuReceptor);
-        if (manageResidue == 1 && doadorOuReceptor == 1)
+        if (manageResidue == 1)
         {
             int idResiduo = ConsoleText::printSelectResiduo();
-            db->setDonorInterest(currentUser, idResiduo);
+            if (doadorOuReceptor == 1)
+            {
+                db.setDonorInterest(currentUser, idResiduo);
+            }
+            else
+            {
+                db.setReceiverInterest(currentUser, idResiduo);
+            }
 
             std::cout << "===== BUSCANDO MATCH ===== \n\n"
                       << std::flush;
 
-            if (!db->deuMatch(currentUser, doadorOuReceptor))
+            if (!db.deuMatch(currentUser, doadorOuReceptor))
             {
                 int op = ConsoleText::printNaoHaMatch();
                 if (op == 1)
@@ -117,29 +123,37 @@ inicio:
             }
             else
             {
-                db->findMatch(currentUser, doadorOuReceptor);
+                std::string n;
+                db.findMatch(currentUser, doadorOuReceptor);
+                std::cout << "Digite o id do usuário: ";
+                std::getline(std::cin, n);
+                int b = std::stoi(n);
+
+                std::string data, horario;
+                int local;
+
+                ConsoleText::printAgendamentoColeta(data, horario, local);
+                Scheduling sched;
+                if ((local == 1 && doadorOuReceptor == 1) || (local == 2 && doadorOuReceptor == 1))
+                {
+                    int x = currentUser.getId();
+                    const std::vector<Receiver> aa = db.readReceiverUsers();
+                    Receiver t = aa[b];
+                    Donor d = db.readDonorUsers()[x];
+                    ConsoleText::printEndereco(t, data, horario);
+                    db.createItem(Scheduling(d, t, idResiduo, t.getAdress(), data, horario));
+                }
+                else
+                {
+                    int x = currentUser.getId();
+                    Receiver t = db.readReceiverUsers()[x];
+                    Donor d = db.readDonorUsers()[b];
+                    ConsoleText::printEndereco(currentUser, data, horario);
+                    db.createItem(Scheduling(d, t, idResiduo, currentUser.getAdress(), data, horario));
+                }
+
+                goto inicio;
             }
-        }
-        else if (manageResidue == 1 && doadorOuReceptor == 2)
-        {
-            // receptor
-            int idResiduo;
-
-            system("CLS");
-            std::cout << "===== RESIDUOS DISPONIVEIS PARA COLETA ===== \n\n"
-                      << std::flush;
-            db->printItem();
-            std::cout << "\nDigite o id do residuo escolhido: ";
-            std::cin >> idResiduo;
-
-            db->setReceiverInterest(currentUser, idResiduo);
-
-            system("CLS");
-
-            std::cout << "===== BUSCANDO MATCH ===== \n\n"
-                      << std::flush;
-
-            db->findMatch(currentUser, doadorOuReceptor);
         }
         else if (manageResidue == 2)
         {
@@ -150,12 +164,12 @@ inicio:
             if (addResiduo == 1)
             {
                 ConsoleText::printCadastroResiduoSolido(nome_residuo, descarte_residuo);
-                db->createItem(Solid(nome_residuo, descarte_residuo));
+                db.createItem(Solid(nome_residuo, descarte_residuo));
             }
             else
             {
                 ConsoleText::printCadastroResiduoLiquido(nome_residuo, descarte_residuo);
-                db->createItem(Liquid(nome_residuo, descarte_residuo));
+                db.createItem(Liquid(nome_residuo, descarte_residuo));
             }
 
             std::cout << "\nResiduo cadastrado com sucesso!";
@@ -184,31 +198,60 @@ inicio:
             currentUser.setName(novoNome);
         }
 
-        system("CLS");
+        system("clear");
         std::cout << "Dados alterados com sucesso!!\n"
                   << std::flush;
         goto inicio;
     }
-    else if (oQFazer == 3 && doadorOuReceptor == 1)
+    else if (oQFazer == 3)
     {
-        ConsoleText::printMenuAgendamento(doadorOuReceptor);
-        std::string data, horario;
-        int local;
-
-        ConsoleText::printAgendamentoColeta(data, horario, local);
-        if (local == 1)
+        if (!ConsoleText::printAgendamentos(currentUser))
         {
+            std::cout << "Nenhum agendamento encontrado. \n";
+            std::cin.get();
+            goto inicio;
         }
-        else if (local == 2)
-        {
-            ConsoleText::printEndereco(currentUser, data, horario);
-        }
-        
-    }
-    else if (oQFazer == 3 && doadorOuReceptor == 2)
-    {
 
-        // Listar agendamentos de coleta;
+        int agnoq = ConsoleText::printAgendamentosOqueFazer();
+
+        if (agnoq == 1)
+        {
+            int nAg = ConsoleText::getIdAgendamento();
+            Scheduling sched = db.readSchedules()[nAg];
+
+            std::string data, horario;
+            int local;
+
+            ConsoleText::printAgendamentoColeta(data, horario, local);
+
+            sched.setData(data);
+            sched.setHora(horario);
+            if (local == 1 && doadorOuReceptor == 1)
+            {
+                User t = (User)sched.getReceiver();
+                ConsoleText::printEndereco(t, data, horario);
+                sched.setPontoColeta(t.getAdress());
+            }
+            else if (local == 2)
+            {
+                ConsoleText::printEndereco(currentUser, data, horario);
+                sched.setPontoColeta(currentUser.getAdress());
+            }
+            db.updateItem(sched);
+            goto inicio;
+        }
+        else if (agnoq == 2)
+        {
+            int nAg = ConsoleText::getIdAgendamento();
+            Scheduling sched = db.readSchedules()[nAg];
+            sched.setEffective(true);
+            db.updateItem(sched);
+            goto inicio;
+        }
+        else
+        {
+            goto inicio;
+        }
     }
     else if (oQFazer == 4)
     {
@@ -216,10 +259,8 @@ inicio:
     }
     else
     {
-        delete db;
         return 0;
     }
 
-    delete db;
     return 0;
 }

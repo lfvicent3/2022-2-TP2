@@ -13,7 +13,6 @@ class Database
 {
 private:
     static std::vector<Donor> listDonorUsers;
-    static std::vector<Receiver> listReceiverUsers;
     static std::vector<Solid> listSolidResidues;
     static std::vector<Liquid> listLiquidResidues;
     static std::vector<Donor> listDonorInterest;
@@ -26,31 +25,31 @@ private:
     int searchItem(Scheduling scheduling);
 
 public:
+    static std::vector<Receiver> listReceiverUsers;
     Database();
     void fakePopulate();
-    void printItem();
-    void createItem(const Donor &donor);
-    void createItem(const Receiver &receiver);
-    void createItem(const Solid &solid);
-    void createItem(const Liquid &liquid);
-    void createItem(const Scheduling &scheduling);
+    void createItem(const Donor donor);
+    void createItem(const Receiver receiver);
+    void createItem(const Solid solid);
+    void createItem(const Liquid liquid);
+    void createItem(const Scheduling scheduling);
 
     void setReceiverInterest(User user, int idResidue);
     void setDonorInterest(User user, int idResidue);
     void findMatch(User user, int userType);
     bool deuMatch(User user, int userType);
 
-    const std::vector<Donor> &readDonorUsers();
-    const std::vector<Receiver> &readReceiverUsers();
-    const std::vector<Solid> &readSolidResidues();
-    const std::vector<Liquid> &readLiquidResidues();
-    const std::vector<Scheduling> &readSchedules();
+    const std::vector<Donor> readDonorUsers();
+    const std::vector<Receiver> readReceiverUsers();
+    const std::vector<Solid> readSolidResidues();
+    const std::vector<Liquid> readLiquidResidues();
+    const std::vector<Scheduling> readSchedules();
 
-    void updateItem(const Donor &donor);
-    void updateItem(const Receiver &receiver);
-    void updateItem(const Solid &solid);
-    void updateItem(const Liquid &liquid);
-    void updateItem(const Scheduling &scheduling);
+    void updateItem(const Donor donor);
+    void updateItem(const Receiver receiver);
+    void updateItem(const Solid solid);
+    void updateItem(const Liquid liquid);
+    void updateItem(const Scheduling scheduling);
     void deleteItem(Donor donor);
     void deleteItem(Receiver receiver);
     void deleteItem(Solid solid);

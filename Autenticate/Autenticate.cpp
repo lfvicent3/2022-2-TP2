@@ -18,7 +18,7 @@ User Autenticate::login(std::string login, std::string password, int op)
                     throw std::invalid_argument("Nao foi possível autenticar. Verifique seu login e senha.");
                 }
 
-                return donor;
+                return static_cast<User>(donor);
             }
         }
 
@@ -35,7 +35,7 @@ User Autenticate::login(std::string login, std::string password, int op)
                     throw std::invalid_argument("Nao foi possível autenticar. Verifique seu login e senha.");
                 }
 
-                return receiver;
+                return static_cast<User>(receiver);
             }
         }
 
@@ -55,7 +55,7 @@ void Autenticate::cadastro(std::string name, std::string login, std::string pass
             }
         }
 
-        this->db.createItem(Donor(name, login, password, document,adress));
+        this->db.createItem(Donor(name, login, password, document, adress));
     }
     else
     {
@@ -67,7 +67,7 @@ void Autenticate::cadastro(std::string name, std::string login, std::string pass
             }
         }
 
-        this->db.createItem(Receiver(name, login, password, document,adress));
+        this->db.createItem(Receiver(name, login, password, document, adress));
     }
 }
 

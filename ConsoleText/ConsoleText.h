@@ -3,6 +3,7 @@
 
 #include "../User/User.h"
 #include "../Database/Database.h"
+#include "../Scheduling/Scheduling.h"
 #include <iostream>
 #include <string>
 
@@ -35,6 +36,9 @@ public:
     static int printEditProfile();
     static int printNaoHaMatch();
     static int printSelectResiduo();
+    static bool printAgendamentos(User user);
+    static int printAgendamentosOqueFazer();
+    static int getIdAgendamento();
 };
 
 #endif

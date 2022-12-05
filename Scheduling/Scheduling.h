@@ -6,7 +6,6 @@
 
 #include "../User/Donor.h"
 #include "../User/Receiver.h"
-#include "../CollectPoint/CollectPoint.h"
 #include "../Residue/Residue.h"
 
 class Scheduling
@@ -23,19 +22,21 @@ private:
     int id;
 
 public:
+    Scheduling();
     Scheduling(Donor donor, Receiver receiver, int idResidue, std::string pontoColeta, std::string data, std::string hora);
     Donor getDonor();
     Receiver getReceiver();
     int getIdResidue();
     std::string getData();
     std::string getHora();
-    std::string setPontoColeta(std::string pontoColeta);
+    void setPontoColeta(std::string pontoColeta);
+    void setData(std::string data);
+    void setHora(std::string hora);
     std::string getPontoColeta();
     bool getEffective();
-    void setEffective(bool effective);     
-    int getId();                  
+    void setEffective(bool effective);
+    int getId();
     ~Scheduling();
 };
-
 
 #endif

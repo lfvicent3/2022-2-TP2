@@ -174,19 +174,10 @@ void Database::findMatch(User user, int userType)
         {
             if (user.getResiduesInterest() == Database::listReceiverUsers[i].getResiduesInterest())
             {
+                Receiver donor = Database::listReceiverUsers[i];
+                std::cout << "\n\nID - " << donor.getId()
+                          << "\nNOME: " << donor.getName();
                 qntMatch++;
-                break;
-            }
-
-            if (qntMatch == 0)
-            {
-
-                std::cout << "Desculpe, nao ha pessoas coletando esse residuo no momento :( \nTente novamente mais tarde. \n\n";
-            }
-            else
-            {
-                std::cout << "Eba! Voce deu um Match com ao menos um usuário do sistema.";
-                std::cout << "Agora basta agendar a entrega dos residuos e aguardar que sejam coletados!";
             }
         }
     }
@@ -197,21 +188,23 @@ void Database::findMatch(User user, int userType)
         {
             if (user.getResiduesInterest() == Database::listDonorUsers[i].getResiduesInterest())
             {
+                Donor donor = Database::listDonorUsers[i];
+                std::cout << "ID - " << donor.getId()
+                          << "\nNOME: " << donor.getName();
                 qntMatch++;
-                break;
             }
         }
+    }
 
-        if (qntMatch == 0)
-        {
+    if (qntMatch == 0)
+    {
 
-            std::cout << "Desculpe, nao ha pessoas doando esse residuo no momento :( \nTente novamente mais tarde. \n\n";
-        }
-        else
-        {
-            std::cout << "Eba! Voce deu um Match com ao menos um usuário do sistema.";
-            std::cout << "Agora basta agendar a coleta dos residuos e ir coletar!";
-        }
+        std::cout << "\nDesculpe, nao ha pessoas doando esse residuo no momento :( \nTente novamente mais tarde. \n\n";
+    }
+    else
+    {
+        std::cout << "\nEba! Voce deu um Match com ao menos um usuário do sistema.";
+        std::cout << "\nAgora basta agendar a coleta dos residuos e ir coletar!\n";
     }
 }
 

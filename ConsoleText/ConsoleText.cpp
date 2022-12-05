@@ -125,15 +125,7 @@ int ConsoleText::printMenuOqueFazer(int userType)
     std::cout << "===== O QUE DESEJA FAZER =====\n";
     std::cout << "1 - Doar/Coletar um residuo\n";
     std::cout << "2 - Editar perfil\n";
-
-    if (userType == 1)
-    {
-        std::cout << "3 - Agendar entrega de residuos\n";
-    }
-    else
-    {
-        std::cout << "3 - Agendar coleta\n";
-    }
+    std::cout << "3 - Ver agendamentos\n";
     std::cout << "4 - Sair\n";
     std::cout << "5 - Encerrar programa \n";
     std::cout << "Informe o numero: ";
@@ -287,13 +279,13 @@ void ConsoleText::printAgendamentoColeta(std::string &data, std::string &horario
 
 int ConsoleText::printSelectResiduo()
 {
-    Database *database = new Database();
+    Database database = Database();
     system("clear");
     std::cout << "===== RESIDUOS DISPONIVEIS PARA DOACAO ===== \n";
     std::cout << "====== SOLIDOS ====== \n";
-    for (int i = 0; i < database->readSolidResidues().size(); i++)
+    for (int i = 0; i < database.readSolidResidues().size(); i++)
     {
-        Solid solid = database->readSolidResidues()[i];
+        Solid solid = database.readSolidResidues()[i];
         std::cout << "ID: "
                   << solid.getId() << " - "
                   << solid.getName() << "\n";
@@ -302,9 +294,9 @@ int ConsoleText::printSelectResiduo()
     }
 
     std::cout << "====== LIQUIDOS ====== \n";
-    for (int i = 0; i < database->readLiquidResidues().size(); i++)
+    for (int i = 0; i < database.readLiquidResidues().size(); i++)
     {
-        Liquid liquid = database->readLiquidResidues()[i];
+        Liquid liquid = database.readLiquidResidues()[i];
         std::cout << "ID: "
                   << liquid.getId() << " - "
                   << liquid.getName() << std::endl;
@@ -315,7 +307,59 @@ int ConsoleText::printSelectResiduo()
 
     ConsoleText::customValidateArraySize = Residue::getGeneratedMaxId();
     ConsoleText::initCustomValidateArraySize = 0;
+
+
     return ConsoleText::getIntOption(
         ConsoleText::customValidate,
         "Insira um id válido.\nTente Novamente: ");
+}
+
+bool ConsoleText::printAgendamentos(User user)
+{
+    system("clear");
+    Database db = Database();
+
+    std::cout << "====== AGENDAMENTOS ====== \n";
+
+    if (db.readSchedules().size() == 0)
+    {
+        return false;
+    }
+    for (int i = 0; i < db.readSchedules().size(); i++)
+    {
+        Scheduling sched = db.readSchedules()[i];
+        if (
+            sched.getDonor().getId() == user.getId() ||
+            sched.getReceiver().getId() == user.getId())
+        {
+            std::cout << "ID - " << sched.getId()
+                      << ",\n Doador: " << sched.getDonor().getName()
+                      << ",\n Receptor: " << sched.getReceiver().getName()
+                      << ",\n Data: " << sched.getData() << " - " << sched.getHora()
+                      << ",\n Local: " << sched.getPontoColeta()
+                      << std::endl;
+        }
+    }
+
+    return true;
+}
+
+int ConsoleText::printAgendamentosOqueFazer()
+{
+    std::cout << "1 - Editar agendamento\n"
+              << "2 - Marcar agendamento como concluído\n"
+              << "3 - Voltar ao menu"
+              << std::endl;
+
+    return ConsoleText::getIntOption(
+        ConsoleText::validateOpInt2,
+        "O número deve ser entre 1 e 3.\nTente Novamente: ");
+}
+
+int ConsoleText::getIdAgendamento()
+{
+    std::cout << "Digite o id do agendamento: ";
+    return ConsoleText::getIntOption(
+        ConsoleText::notValidate,
+        "Insira um número\nTente Novamente: ");
 }

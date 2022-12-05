@@ -1,7 +1,7 @@
 #include "Scheduling.h"
 
 int Scheduling::generatedIds = 0;
-
+Scheduling::Scheduling() {}
 Scheduling::Scheduling(Donor donor, Receiver receiver, int idResidue, std::string pontoColeta, std::string data, std::string hora)
 {
     this->donor = donor;
@@ -46,9 +46,9 @@ std::string Scheduling::getPontoColeta()
     return this->pontoColeta;
 }
 
-std::string Scheduling::setPontoColeta(std::string pontoColeta)
+void Scheduling::setPontoColeta(std::string pontoColeta)
 {
-    return this->pontoColeta;
+    this->pontoColeta = pontoColeta;
 }
 
 bool Scheduling::getEffective()
@@ -66,6 +66,14 @@ int Scheduling::getId()
     return this->id;
 }
 
+void Scheduling::setData(std::string data)
+{
+    this->data = data;
+}
+void Scheduling::setHora(std::string hora)
+{
+    this->hora = hora;
+}
 Scheduling::~Scheduling()
 {
 }
