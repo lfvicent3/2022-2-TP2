@@ -48,31 +48,12 @@ void Database::fakePopulate()
     for (int i = 0; i < Database::listDonorUsers.size(); i++)
     {
         int num = (std::rand() % 10);
-        Database::listDonorUsers[i].setResiduesInterest(num);
+        Database::listDonorUsers[i].setResiduesInterest(1);
     }
     for (int j = 0; j < Database::listReceiverUsers.size(); j++)
     {
         int num = (std::rand() % 10);
-        Database::listReceiverUsers[j].setResiduesInterest(num);
-    }
-}
-
-void Database::printItem()
-{
-
-    std::cout << "====== SOLIDOS ====== \n";
-    for (int i = 0; i < Database::listSolidResidues.size(); i++)
-    {
-        std::cout << "ID: " << Database::listSolidResidues[i].getId() << " - " << Database::listSolidResidues[i].getName() << "\n";
-        std::cout << Database::listSolidResidues[i].getHelp() << "\n";
-        std::cout << std::endl;
-    }
-    std::cout << "====== LIQUIDOS ====== \n";
-    for (int i = 0; i < Database::listLiquidResidues.size(); i++)
-    {
-        std::cout << "ID: " << Database::listLiquidResidues[i].getId() << " - " << Database::listLiquidResidues[i].getName() << std::endl;
-        std::cout << Database::listLiquidResidues[i].getHelp() << std::endl;
-        std::cout << std::endl;
+        Database::listReceiverUsers[j].setResiduesInterest(1);
     }
 }
 
@@ -347,6 +328,34 @@ void Database::updateItem(const Scheduling &scheduling)
 {
     int i = Database::searchItem(scheduling);
     Database::listScheduling[i] = scheduling;
+}
+
+Receiver Database::getReceiver(int id)
+{
+    for (int i = 0; i < Database::listReceiverUsers.size(); i++)
+    {
+        Receiver r = Database::listReceiverUsers[i];
+        if (r.getId() == id)
+        {
+            return r;
+        }
+    }
+
+    return Receiver();
+}
+
+Donor Database::getDonor(int id)
+{
+    for (int i = 0; i < Database::listDonorUsers.size(); i++)
+    {
+        Donor r = Database::listDonorUsers[i];
+        if (r.getId() == id)
+        {
+            return r;
+        }
+    }
+
+    return Donor();
 }
 
 Database::~Database()

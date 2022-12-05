@@ -137,17 +137,17 @@ inicio:
                 if ((local == 1 && doadorOuReceptor == 1) || (local == 2 && doadorOuReceptor == 1))
                 {
                     int x = currentUser.getId();
-                    const std::vector<Receiver> aa = db.readReceiverUsers();
-                    Receiver t = aa[b];
-                    Donor d = db.readDonorUsers()[x];
+
+                    Receiver t = db.getReceiver(b);
+                    Donor d = db.getDonor(x);
                     ConsoleText::printEndereco(t, data, horario);
                     db.createItem(Scheduling(d, t, idResiduo, t.getAdress(), data, horario));
                 }
                 else
                 {
                     int x = currentUser.getId();
-                    Receiver t = db.readReceiverUsers()[x];
-                    Donor d = db.readDonorUsers()[b];
+                    Receiver t = db.getReceiver(x);
+                    Donor d = db.getDonor(b);
                     ConsoleText::printEndereco(currentUser, data, horario);
                     db.createItem(Scheduling(d, t, idResiduo, currentUser.getAdress(), data, horario));
                 }
