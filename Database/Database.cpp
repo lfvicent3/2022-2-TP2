@@ -14,9 +14,9 @@ Database::Database() {}
 /**
  * @brief Responsável por criar dados ficticios no programa.
  * Exemplo:
- * - Residuos Papel, Metal e Oléo.
- * - Usuário receptor Login: receiver, password: receiver
- * - Usuário doador Login: doador, password:doador
+ * - Residuos Papel, Metal e Oleo.
+ * - usuario receptor Login: receiver, password: receiver
+ * - usuario doador Login: doador, password:doador
  */
 void Database::fakePopulate()
 {
@@ -25,6 +25,10 @@ void Database::fakePopulate()
     this->createItem(Solid("Papel", "Para o descarte correto de papeis, jogue-os na lixeira azul ou de reciclaveis."));
     this->createItem(Solid("Metal", "Para o descarte correto de metais, jogue-os na lixeira amarela ou de reciclaveis."));
     this->createItem(Solid("Plastico", "Para o descarte correto de plasticos, jogue-os na lixeira vermelha ou de reciclaveis."));
+    this->createItem(Solid("Lixo Eletronico", "Para o descarte correto de lixos eletronicos, descarte-os em pontos de coleta apropriados"));
+    this->createItem(Solid("Jornal", "Para o descarte correto de jornais, jogue-os na lixeira azul ou de reciclaveis."));
+    this->createItem(Solid("Garrafa Pet", "Para o descarte correto de garrafas pet, jogue-as na lixeira vermelha ou de reciclaveis."));
+    this->createItem(Solid("Viros", "Para o descarte correto de vidros, jogue-os na lixeira verde ou de reciclaveis."));
 
     // liquidos
 
@@ -32,15 +36,15 @@ void Database::fakePopulate()
 
     // pessoas fake
 
-    this->createItem(Donor("Cleiton Baiano", "donor", "donor", 123456789, "rua dos passos, 112, vicosa mg"));
-    this->createItem(Donor("Neymar Junior", "donor2", "donor", 123456789, "rua dos passos, 112, vicosa mg"));
-    this->createItem(Donor("Isabella Swan", "donor3", "donor", 123456789, "rua dos passos, 112, vicosa mg"));
-    this->createItem(Donor("Maria da Penha", "donor4", "donor", 123456789, "rua dos passos, 112, vicosa mg"));
+    this->createItem(Donor("Igor Nascimento", "igor", "123", 123456789, "Centro , Praca do Rosario, Vicosa MG, 36570-063"));
+    this->createItem(Donor("Neymar Junior", "meninoney", "hexahexa", 123456789, "Clelia Bernardes , Avenida Olívia de Castro Almeida, Vicosa MG, 36570-280"));
+    this->createItem(Donor("Isabella Swan", "bella", "bella", 123456789, "Centro , Praca do Rosario, Vicosa MG, 36570-063"));
+    this->createItem(Donor("Maria da Penha", "donor", "donor", 123456789, "Centro , Praca do Rosario, Vicosa MG, 36570-063"));
 
-    this->createItem(Receiver("Katia Maria", "receiver", "receiver", 1234567899, "rua dos passos, 112, vicosa mg"));
-    this->createItem(Receiver("Vitoria Ferreira", "receiver1", "receiver", 1234567899, "rua dos passos, 112, vicosa mg"));
-    this->createItem(Receiver("Luiz Felipe", "receiver2", "receiver", 1234567899, "rua dos passos, 112, vicosa mg"));
-    this->createItem(Receiver("Julio Cocorico", "receiver3", "receiver", 1234567899, "rua dos passos, 112, vicosa mg"));
+    this->createItem(Receiver("Katia Maria", "receiver", "receiver", 1234567899, "Centro , Praca do Rosario, Vicosa MG, 36570-063"));
+    this->createItem(Receiver("Vitoria Ferreira", "receiver", "receiver", 1234567899, "Centro , Praca do Rosario, Vicosa MG, 36570-063"));
+    this->createItem(Receiver("Luiz Felipe", "receiver", "receiver", 1234567899, "Centro , Praca do Rosario, Vicosa MG, 36570-063"));
+    this->createItem(Receiver("Julio Cocorico", "receiver", "receiver", 1234567899, "Centro , Praca do Rosario, Vicosa MG, 36570-063"));
 
     // setando interesses,
     std::srand(std::time(nullptr));
@@ -48,12 +52,12 @@ void Database::fakePopulate()
     for (int i = 0; i < Database::listDonorUsers.size(); i++)
     {
         int num = (std::rand() % 10);
-        Database::listDonorUsers[i].setResiduesInterest(1);
+        Database::listDonorUsers[i].setResiduesInterest(num);
     }
     for (int j = 0; j < Database::listReceiverUsers.size(); j++)
     {
         int num = (std::rand() % 10);
-        Database::listReceiverUsers[j].setResiduesInterest(1);
+        Database::listReceiverUsers[j].setResiduesInterest(num);
     }
 }
 
@@ -73,6 +77,7 @@ void Database::setDonorInterest(User user, int idResidue)
                 {
                     idInterest = Database::listSolidResidues[i].getId();
                     Database::listDonorUsers[j].setResiduesInterest(idInterest);
+                    user.setResiduesInterest(idInterest);
                 }
             }
             for (int i = 0; i < Database::listLiquidResidues.size(); i++)
@@ -81,10 +86,13 @@ void Database::setDonorInterest(User user, int idResidue)
                 {
                     idInterest = Database::listLiquidResidues[i].getId();
                     Database::listDonorUsers[j].setResiduesInterest(idInterest);
+                    user.setResiduesInterest(idInterest);
                 }
             }
         }
     }
+    
+    
 }
 
 void Database::setReceiverInterest(User user, int idResidue)
@@ -102,6 +110,7 @@ void Database::setReceiverInterest(User user, int idResidue)
                 {
                     idInterest = Database::listSolidResidues[i].getId();
                     Database::listReceiverUsers[j].setResiduesInterest(idInterest);
+                    user.setResiduesInterest(idInterest);
                 }
             }
             for (int i = 0; i < Database::listLiquidResidues.size(); i++)
@@ -111,10 +120,14 @@ void Database::setReceiverInterest(User user, int idResidue)
 
                     idInterest = Database::listLiquidResidues[i].getId();
                     Database::listReceiverUsers[j].setResiduesInterest(idInterest);
+                    user.setResiduesInterest(idInterest);
                 }
             }
         }
     }
+    user.setResiduesInterest(idInterest);
+    std::cout << "seu interesse e ";
+    std::cout << user.getResiduesInterest();
 }
 
 // procurando matchs
@@ -184,7 +197,7 @@ void Database::findMatch(User user, int userType)
     }
     else
     {
-        std::cout << "\nEba! Voce deu um Match com ao menos um usuário do sistema.";
+        std::cout << "\nEba! Voce deu um Match com ao menos um usuario do sistema.";
         std::cout << "\nAgora basta agendar a coleta dos residuos e ir coletar!\n";
     }
 }

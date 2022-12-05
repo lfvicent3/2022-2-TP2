@@ -196,7 +196,7 @@ void ConsoleText::printCadastroResiduoLiquido(std::string &name, std::string &he
 void ConsoleText::printCadastroPontoColeta(std::string &nameRua, std::string &nameBairro, std::string &cep, std::string &referencia)
 {
     std::cout << "===== CADASTRAR PONTO DE COLETA ===== \n";
-    std::cout << "Insira os dados de localizaçao:\n";
+    std::cout << "Insira os dados de localizacao:\n";
     std::cout << "Rua: ";
     std::getline(std::cin, nameRua);
     std::cout << "Bairro: ";
@@ -222,7 +222,7 @@ int ConsoleText::printEditProfile()
 
 int ConsoleText::printNaoHaMatch()
 {
-    system("clear");
+    
     std::cout << "Desculpe, nao ha pessoas coletando esse residuo no momento :( \nTente novamente mais tarde. \n\n";
     std::cout << "1 - Voltar ao menu iniciar\n";
     std::cout << "2 - Encerrar programa\n";
@@ -270,11 +270,11 @@ void ConsoleText::printAgendamentoColeta(std::string &data, std::string &horario
     std::cout << "== LOCAL ==\n";
     std::cout << "1 - Levar no local do receptor\n";
     std::cout << "2 - Entregar no meu local de coleta\n";
-    std::cout << "Informe o número: ";
+    std::cout << "Informe o numero: ";
 
     local = ConsoleText::getIntOption(
         ConsoleText::validateOpInt,
-        "O número deve estar entre 1 e 2.");
+        "O numero deve estar entre 1 e 2.");
 }
 
 int ConsoleText::printSelectResiduo()
@@ -311,7 +311,7 @@ int ConsoleText::printSelectResiduo()
 
     return ConsoleText::getIntOption(
         ConsoleText::customValidate,
-        "Insira um id válido.\nTente Novamente: ");
+        "Insira um id valido.\nTente Novamente: ");
 }
 
 bool ConsoleText::printAgendamentos(User user)
@@ -353,7 +353,7 @@ int ConsoleText::printAgendamentosOqueFazer()
 
     return ConsoleText::getIntOption(
         ConsoleText::validateOpInt2,
-        "O número deve ser entre 1 e 3.\nTente Novamente: ");
+        "O numero deve ser entre 1 e 3.\nTente Novamente: ");
 }
 
 int ConsoleText::getIdAgendamento()
@@ -361,5 +361,5 @@ int ConsoleText::getIdAgendamento()
     std::cout << "Digite o id do agendamento: ";
     return ConsoleText::getIntOption(
         ConsoleText::notValidate,
-        "Insira um número\nTente Novamente: ");
+        "Insira um numero\nTente Novamente: ");
 }

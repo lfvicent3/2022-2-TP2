@@ -118,14 +118,14 @@ inicio:
                 }
                 else if (op == 2)
                 {
-                    goto login;
+                    return 0;
                 }
             }
             else
             {
                 std::string n;
                 db.findMatch(currentUser, doadorOuReceptor);
-                std::cout << "Digite o id do usuário: ";
+                std::cout << "Digite o id do usuario: ";
                 std::getline(std::cin, n);
                 int b = std::stoi(n);
 
@@ -185,7 +185,7 @@ inicio:
         {
             // editar o endereco
             std::string novoEndereco;
-            std::cout << "==== EDITAR ENDERECO ==== \n Escreva o novo endereço: ";
+            std::cout << "==== EDITAR ENDERECO ==== \n Escreva o novo endereco: ";
             std::getline(std::cin, novoEndereco);
             currentUser.setAdress(novoEndereco);
         }
