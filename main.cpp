@@ -155,8 +155,9 @@ inicio:
 
                 
             }
+            goto inicio;
         }
-        goto inicio;
+        
         else if (manageResidue == 2)
         {
             // cadastrar um residuo
